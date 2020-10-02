@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: #00c3ff;
+}
+
+html, body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f8f8f8;
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+}
+
+.ava {
+  max-width: 100%;
+  max-height: 50vh;
+}
+
+.main {
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.left {
+  flex: 2;
+  padding: 20px;
+  min-width: 320px;
+  text-align: center;
+}
+
+.right {
+  flex: 3;
+  padding: 20px;
+  min-width: 320px;
+  text-align: center;
+}
+
+.ava {
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+}
+
+.card {
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.card:not(:first-child) {
+  margin-top: 20px;
+}
+
+.contact:not(:first-child) {
+  margin-top: 10px;
+}
+
+.bio:not(:first-child) {
+  margin-top: 10px;
+}
+
+.card_title {
+  text-transform: uppercase;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #777;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.interest {
+  display: inline-block;
+  margin: 5px;
+}
+
+.little_comment {
+  color: grey;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 0 20px;
+}
