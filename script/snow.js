@@ -26,6 +26,7 @@
         el.parentElement.style.position = 'relative';
 
         el.style.position = 'absolute';
+        el.style.pointerEvents = 'none';
         el.style.minWidth = '100%';
         el.style.minHeight = '100%';
         el.style.top = '0';
