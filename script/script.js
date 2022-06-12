@@ -21,14 +21,19 @@
             return;
         let { rotationY, rotationX, scale } = target.coolEffects;
         target.coolEffects = null;
-        animate();
-        function animate() {
+        let previousTimestamp = null;
+        window.requestAnimationFrame(animate);
+        function animate(timestamp) {
+            if (previousTimestamp == null)
+                previousTimestamp = timestamp;
+            let delta = timestamp - previousTimestamp;
             target.style.transform = `perspective(800px) translateZ(${-scale*15}px) rotateY(${scale*rotationY}deg) rotateX(${-scale*rotationX}deg)`;
-            scale = scale*0.95 - 0.04;
+            scale -= (scale*0.001 + 0.002)*delta;
             if (scale > 0)
                 window.requestAnimationFrame(animate);
             else
                 target.style.transform = "";
+            previousTimestamp = timestamp;
         }
     }
 }
