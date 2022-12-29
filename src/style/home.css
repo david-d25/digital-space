@@ -1,23 +1,4 @@
-* {
-  box-sizing: border-box;
-  font-size: 18px;
-}
-
-a {
-  text-decoration: none;
-  color: #00c3ff;
-}
-
-html, body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #f8f8f8;
-}
-
-.container {
-  max-width: 720px;
-  margin: auto;
-}
+@import "style/common.css";
 
 .ava {
   max-width: 100%;

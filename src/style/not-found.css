@@ -1,0 +1,14 @@
+@import "style/common.css";
+
+.not-found {
+    text-align: center;
+    margin-top: 30vh;
+}
+
+.not-found__title {
+    font-size: calc(10vw + 24px);
+}
+
+.not-found__description {
+    font-size: 18px;
+}
