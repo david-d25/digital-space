@@ -8,7 +8,7 @@ const books = [
         isbn: "978-5-496-01395-6",
         language: "Russian",
         coverImage: "data/book-cover/id0.jpg",
-        comment: null,
+        comment: "This book gives a good general understanding of how operating systems work. The first half of book covers the historical aspect of operating systems' evolution. The other half covers the practical implementation of their different parts. Overall, it's not too hard to read, I would recommend it for anyone who is curious.",
         status: "have read"
     }, {
         id: 1,
@@ -19,7 +19,7 @@ const books = [
         isbn: "978-5-91671-947-5",
         language: "Russian",
         coverImage: "data/book-cover/id1.jpg",
-        comment: null,
+        comment: "This book explains how companies use storytelling and build product ecosystems to sell things better. Very easy and fun to read, I recommend it.",
         status: "have read"
     }, {
         id: 2,
@@ -30,7 +30,7 @@ const books = [
         isbn: null,
         language: "Russian",
         coverImage: "data/book-cover/id2.png",
-        comment: null,
+        comment: "A book of Legendary level 🔥",
         status: "have read"
     }, {
         id: 3,
@@ -41,7 +41,7 @@ const books = [
         isbn: "978-978-5-91671-841-6",
         language: "Russian",
         coverImage: "data/book-cover/id3.jpg",
-        comment: null,
+        comment: "Quite a specific book. This book is a mix of four fundamental things about this world: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Sometimes it's easy to read, sometimes it's hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. Spoiler: the parallel universes in the context of this book are not the ones shown in movies.",
         status: "have read"
     }, {
         id: 4,

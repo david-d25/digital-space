@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: #00c3ff;
+}
+
+html, body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f8f8f8;
+
+  &:has(.requires-no-scroll) {
+    overflow: hidden;
+  }
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+}
+
+$tablet-width: 768px;
+$phone-width: 480px;
+
+@mixin tablet {
+  @media (max-width: #{$tablet-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media (max-width: #{$phone-width - 1px}) {
+    @content;
+  }
+}

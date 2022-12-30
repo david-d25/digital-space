@@ -1,0 +1,113 @@
+@import "style/common.scss";
+
+.c-popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-flow: wrap;
+  overflow: auto;
+
+  @include tablet {
+    align-items: end;
+  }
+
+  &.active {
+    display: flex;
+  }
+
+  .backstage {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  .body {
+    max-width: 80vh;
+    background: white;
+    position: relative;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 15px;
+    box-shadow: 0 0 35px rgb(0 0 0 / 20%);
+    animation: popup-appear 300ms;
+
+    @include tablet {
+      transform: none;
+      border-radius: 15px 15px 0 0;
+      top: unset;
+      animation: popup-appear-tablet 300ms;
+    }
+
+    @include phone {
+      width: 100vw;
+      margin-top: 30vh;
+      animation: popup-appear-mobile 300ms;
+    }
+
+    @keyframes popup-appear {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes popup-appear-tablet {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0%);
+      }
+    }
+
+    @keyframes popup-appear-mobile {
+      from {
+        margin-top: 100vh;
+      }
+
+      to {
+        margin-top: 30vh;
+      }
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .close-button:after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 100%;
+    border-top: 5px solid black;
+    transform: translateY(18px) rotate(45deg);
+  }
+  .close-button:before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 100%;
+    border-top: 5px solid black;
+    transform: translateY(18px) rotate(-45deg);
+  }
+}
+

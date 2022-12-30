@@ -1,10 +1,11 @@
 import React from "react";
 
-import "style/library.css";
+import "style/library.scss";
 
 import books from "data/books"
 import qs from "query-string"
 import { Link } from "react-router-dom";
+import Popup from "../component/popup/Popup";
 
 export default class Library extends React.Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class Library extends React.Component {
         const urlParams = qs.parse(window.location.search);
         this.state = {
             searchInput: urlParams.q || "",
-            popupTargetBook: null
+            popupActive: false,
+            popupBook: null
         }
     }
 
@@ -24,53 +26,83 @@ export default class Library extends React.Component {
                         <Link to="/" className="to-home-link">&lt; Home</Link>
                         <h1 className="title">My Library</h1>
                         <SearchBar  value={this.state.searchInput}
-                                    onInput={e => this.setState({searchInput: e.target.value})}/>
+                                    onInput={e => this.onSearch(e.target.value)}/>
                         <BookList   books={books}
                                     searchFilter={this.state.searchInput}
-                                    onBookClick={book => this.setState({popupTargetBook: book})}/>
-                        <BookDetailsPopup   targetBook={this.state.popupTargetBook}
-                                            onCloseClick={() => this.setState({popupTargetBook: null})}/>
+                                    onBookClick={this.openBookInPopup}/>
+                        <BookDetailsPopup   book={this.state.popupBook}
+                                            active={this.state.popupActive}
+                                            onCloseClick={this.closePopup}/>
                     </div>
                 </div>
             </div>
         )
     }
+
+    onSearch = (query) => {
+        this.setState({
+            searchInput: query
+        })
+    }
+
+    openBookInPopup = (book) => {
+        this.setState({
+            popupActive: true,
+            popupBook: book
+        })
+    }
+
+    closePopup = () => {
+        this.setState({
+            popupActive: false
+        });
+    }
 }
 
 function BookDetailsPopup(props) {
-    const book = props.targetBook
+    const { active, book, onCloseClick } = props
     return (
-        book && 
-            <div className={`popup-wr ${book ? 'active' : ''}`}>
-                <div className="popup-backstage" onClick={props.onCloseClick}></div>
-                <div className="popup">
-                    <div className="popup__close-button" onClick={props.onCloseClick}></div>
-                    <div className="popup__title">
+        <Popup active={active} onCloseClick={onCloseClick}>
+            { book &&
+                <div className="book-popup">
+                    <div className="book-popup__title">
                         {book.name} ({book.year})
-                        {book.edition && <div className="popup__edition">{book.edition}</div>}
+                        {book.edition && <div className="book-popup__edition">{book.edition}</div>}
                     </div>
-                    <div className="popup__img-wr">
-                        <img className="popup__img" src={book.coverImage} alt={book.name}></img>
+                    <div className="book-popup__media">
+                        <img className="book-popup__book-cover" src={book.coverImage} alt={book.name}></img>
                     </div>
-                    <div className="popup__info">
-                        <div className="popup__block">
-                            <div className="popup__label">Status:</div>
-                            {book.status === "have read" && <div className="popup__status green">Have read this</div>}
-                            {book.status === "reading" && <div className="popup__status blue">Reading this currently</div>}
+                    <div className="book-popup__info">
+                        <div className="book-popup__block">
+                            <div className="book-popup__label">Status:</div>
+                            {book.status === "have read" && <div className="book-popup__status green">Have read this</div>}
+                            {book.status === "reading" && <div className="book-popup__status blue">Reading this currently</div>}
                         </div>
-                        <div className="popup__block">
-                            <div className="popup__label">Authors:</div>
-                            <div className="popup__authors">
-                                {book.authors.map(a => <div className="popup__author" key={a}>{a}</div>)}
+                        <div className="book-popup__block">
+                            <div className="book-popup__label">Authors:</div>
+                            <div className="book-popup__authors">
+                                {book.authors.map(a => <div className="book-popup__author" key={a}>{a}</div>)}
                             </div>
                         </div>
-                        <div className="popup__block">
-                            <div className="popup__language">Language: {book.language}</div>
-                            {book.isbn && <div className="popup__isbn">ISBN {book.isbn}</div>}
+                        { book.comment &&
+                            <div className="book-popup__block book-popup__comment-block">
+                                <div className="book-popup__label">David's thoughts:</div>
+                                <div className="book-popup__comment">
+                                    {book.comment}
+                                </div>
+                            </div>
+                        }
+                        <div className="book-popup__block">
+                            <div className="book-popup__label"></div>
+                            <div className="book-popup__language">This book is in {book.language}</div>
+                        </div>
+                        <div className="book-popup__block">
+                            {book.isbn && <div className="book-popup__isbn">ISBN {book.isbn}</div>}
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+        </Popup>
     )
 }
 
@@ -102,6 +134,11 @@ function BookCard(props) {
     const book = props.book
     return (
         <div className="book-item" onClick={props.onClick}>
+            { book.status &&
+                <div className={`book-item__status ${book.status === 'have read' && 'green'} ${book.status === 'reading' && 'blue'}`}>
+                    {book.status}
+                </div>
+            }
             <div className="book-item__img-wr">
                 <img className="book-item__img" src={book.coverImage} alt={book.name}/>
             </div>

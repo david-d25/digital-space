@@ -49,7 +49,7 @@ export default class Home extends React.Component {
                                 This page made in 30 mins and will be replaced with something cooler someday, but now I'm too lazy to do something.
                             </div>
                         </s>
-                        <div className="little_comment">Yes, finally added some useful stuff.</div>
+                        <div className="little_comment">Finally added some useful stuff.</div>
                     </div>
                 </div>
             </div>
