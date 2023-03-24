@@ -92,7 +92,7 @@ function BookDetailsPopup(props) {
     const { active, book, onCloseClick } = props
     return (
         <Popup active={active} onCloseClick={onCloseClick}>
-            { book &&
+            { book ? (
                 <div className="book-popup">
                     <div className="book-popup__title">
                         {book.name} ({book.year})
@@ -130,12 +130,13 @@ function BookDetailsPopup(props) {
                         </div>
                     </div>
                 </div>
-            ||
+            ) : (
                 <div className="book-popup">
                     <div className="book-popup__centered-message">
                         Book not found :(
                     </div>
                 </div>
+            )
             }
         </Popup>
     )

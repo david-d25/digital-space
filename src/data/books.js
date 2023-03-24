@@ -41,7 +41,7 @@ const books = [
         isbn: "978-978-5-91671-841-6",
         language: "Russian",
         coverImage: "data/book-cover/id3.jpg",
-        comment: "Quite a specific book. This book is a mix of four fundamental things about this world: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Sometimes it's easy to read, sometimes it's hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. Spoiler: the parallel universes in the context of this book are not the ones shown in movies.",
+        comment: "Quite a specific book. This book explains this world using a mix of four fundamental things: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Some chapters are easy to read, some are hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. The parallel universes in the context of this book are not the ones shown in movies.",
         status: "have read"
     }, {
         id: 4,
