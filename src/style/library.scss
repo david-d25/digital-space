@@ -207,6 +207,13 @@
     color: grey;
 }
 
+.book-popup__centered-message {
+    grid-row: start / end;
+    grid-column: start / end;
+    margin: 50px;
+    font-size: 1.2em;
+}
+
 .book-popup__status {
     padding: 5px 15px;
     border-radius: 5px;

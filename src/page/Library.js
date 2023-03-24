@@ -10,9 +10,8 @@ import Popup from "../component/popup/Popup";
 export default class Library extends React.Component {
     constructor(props) {
         super(props);
-        const urlParams = qs.parse(window.location.search);
         this.state = {
-            searchInput: urlParams.q || "",
+            searchInput: "",
             popupActive: false,
             popupBook: null
         }
@@ -29,7 +28,7 @@ export default class Library extends React.Component {
                                     onInput={e => this.onSearch(e.target.value)}/>
                         <BookList   books={books}
                                     searchFilter={this.state.searchInput}
-                                    onBookClick={this.openBookInPopup}/>
+                                    onBookClick={this.openBookPopup}/>
                         <BookDetailsPopup   book={this.state.popupBook}
                                             active={this.state.popupActive}
                                             onCloseClick={this.closePopup}/>
@@ -39,23 +38,53 @@ export default class Library extends React.Component {
         )
     }
 
+    componentDidMount() {
+        const urlParams = qs.parse(window.location.search);
+        const searchQueryParam = urlParams.q;
+        const bookIdQueryParam = urlParams.bookId;
+        if (searchQueryParam) {
+            this.setState({
+                searchInput: decodeURIComponent(searchQueryParam)
+            });
+        }
+        if (bookIdQueryParam) {
+            const book = books.find(b => b.id.toString() === bookIdQueryParam);
+            this.openBookPopup(book);
+        }
+    }
+
     onSearch = (query) => {
         this.setState({
             searchInput: query
-        })
+        });
     }
 
-    openBookInPopup = (book) => {
+    openBookPopup = (book) => {
         this.setState({
             popupActive: true,
             popupBook: book
-        })
+        });
     }
 
     closePopup = () => {
         this.setState({
             popupActive: false
         });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.updateUrl();
+    }
+
+    updateUrl() {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('q');
+        url.searchParams.delete('bookId');
+        if (this.state.searchInput)
+            url.searchParams.set('q', this.state.searchInput);
+        if (this.state.popupActive && this.state.popupBook)
+            url.searchParams.set('bookId', this.state.popupBook.id);
+        window.history.replaceState(null, null, url);
     }
 }
 
@@ -75,8 +104,8 @@ function BookDetailsPopup(props) {
                     <div className="book-popup__info">
                         <div className="book-popup__block">
                             <div className="book-popup__label">Status:</div>
-                            {book.status === "have read" && <div className="book-popup__status green">Have read this</div>}
-                            {book.status === "reading" && <div className="book-popup__status blue">Reading this currently</div>}
+                            {book.status === "have read" && <div className="book-popup__status green">Have read</div>}
+                            {book.status === "reading" && <div className="book-popup__status blue">Reading currently</div>}
                         </div>
                         <div className="book-popup__block">
                             <div className="book-popup__label">Authors:</div>
@@ -99,6 +128,12 @@ function BookDetailsPopup(props) {
                         <div className="book-popup__block">
                             {book.isbn && <div className="book-popup__isbn">ISBN {book.isbn}</div>}
                         </div>
+                    </div>
+                </div>
+            ||
+                <div className="book-popup">
+                    <div className="book-popup__centered-message">
+                        Book not found :(
                     </div>
                 </div>
             }

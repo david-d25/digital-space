@@ -52,7 +52,7 @@ const books = [
         isbn: "978-5-9614-2512-3",
         language: "Russian",
         coverImage: "data/book-cover/id4.jpg",
-        comment: null,
+        comment: "I'm not a game designer, so I've read this book just out of curiosity, but it has far exceeded my expectations. It is indeed a splendid book for anyone who is interested in how (not only computer) games work. You don't have to make games to have fun reading this book.",
         status: "have read"
     }, {
         id: 5,
@@ -63,7 +63,7 @@ const books = [
         isbn: null,
         language: "Russian",
         coverImage: "data/book-cover/id5.png",
-        comment: null,
+        comment: "Don't even think about reading this if you're not a hardware engineer :))",
         status: "have read"
     }, {
         id: 6,
@@ -74,7 +74,7 @@ const books = [
         isbn: "978-5-496-02541-6",
         language: "Russian",
         coverImage: "data/book-cover/id6.jpg",
-        comment: null,
+        comment: "Just a good book to learn algorithms casually. It uses nice drawn pictures and Python examples. If you're new to programming, this book is good for you.",
         status: "have read"
     }, {
         id: 7,
@@ -85,7 +85,7 @@ const books = [
         isbn: "978-5-496-01127-3",
         language: "Russian",
         coverImage: "data/book-cover/id7.jpg",
-        comment: null,
+        comment: "A good book covering a wide variety of Java stuff, no comments.",
         status: "have read"
     }, {
         id: 8,
@@ -96,7 +96,7 @@ const books = [
         isbn: "978-5-8459-1349-4",
         language: "Russian",
         coverImage: "data/book-cover/id8.png",
-        comment: null,
+        comment: "I'm not a compiler engineer, so I've read this book just out of curiosity. It's quite hard to read and understand everything, but it gave me some basic understanding of what methods and principles do compilers use to work.",
         status: "have read"
     }, {
         id: 9,
@@ -107,7 +107,7 @@ const books = [
         isbn: "978-5-17-113704-5",
         language: "Russian",
         coverImage: "data/book-cover/id9.jpg",
-        comment: null,
+        comment: "Well, I can't say I became a pro economist reading this, but it was definitely a very fun and interesting book. You can read this even if you don't give a damn about economics.",
         status: "have read"
     }, {
         id: 10,
@@ -151,7 +151,7 @@ const books = [
         isbn: "978-5-4461-0552-6",
         language: "Russian",
         coverImage: "data/book-cover/id13.jpg",
-        comment: null,
+        comment: "Despite this book being written for therapists, it's very easy to read and it has a lot of good tips and methods for solving cognitive problems. Though you should find a real therapist anyway if you have depression or anything alike.",
         status: "have read"
     }, {
         id: 14,
@@ -162,7 +162,7 @@ const books = [
         isbn: "978-1-4842-2808-1",
         language: "English",
         coverImage: "data/book-cover/id14.jpg",
-        comment: null,
+        comment: "As always, Apress published a very good high-quality learning material. If you know Java, but you're new to DI & IoC, this book is for you. It uses a guided discovery learning method where you first 'invent' Spring Framework by yourself at the beginning of the book, which I consider a very good way of learning things.",
         status: "have read"
     }, {
         id: 15,
