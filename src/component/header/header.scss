@@ -1,0 +1,40 @@
+@import "@/style/common.scss";
+
+.c-header {
+  background: var(--panel-background-color);
+  box-shadow: 0 0 50px rgb(0 0 0 / 10%);
+
+  .header-body {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+
+    @include phone {
+      margin: 0 20px;
+    }
+
+    .logo {
+      font-family: impact, serif;
+      user-select: none;
+      font-size: 22px;
+    }
+
+    .links {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      flex: 1;
+      margin: 0 20px;
+
+      .link {
+        padding: 10px;
+
+        &.active {
+          background: rgba(0, 0, 0, 0.1);
+          color: var(--text-color);
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

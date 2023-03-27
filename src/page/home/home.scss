@@ -1,0 +1,96 @@
+@import "@/style/common.scss";
+
+.c-home {
+  .ava {
+    max-width: 100%;
+    max-height: 50vh;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .ava_wr {
+    @include phone {
+      overflow: hidden;
+      height: 0;
+      border-radius: 9999px;
+      padding-bottom: 75%;
+      width: 75%;
+      margin: auto;
+    }
+  }
+
+  .main {
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  .left {
+    flex: 2;
+    margin: 20px 20px 20px 0;
+    min-width: 320px;
+    text-align: center;
+
+    @include phone {
+      margin: 20px;
+    }
+  }
+
+  .right {
+    flex: 3;
+    margin: 20px 0 20px 20px;
+    min-width: 320px;
+    text-align: center;
+
+    @include phone {
+      margin: 20px;
+    }
+  }
+
+  .card {
+    border-radius: 10px;
+    background: var(--panel-background-color);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+  }
+
+  .card:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .contact:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  .bio {
+    .clickable {
+      cursor: pointer;
+      color: #00c3ff;
+    }
+  }
+
+  .bio:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  .card_title {
+    text-transform: uppercase;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #777;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .interest {
+    display: inline-block;
+    margin: 5px;
+  }
+
+  .popup-image {
+    padding-top: 40px;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,59 @@
+@import "@/style/theme-dark.scss";
+
+.c-theme-switch {
+  user-select: none;
+
+  .body {
+    width: 52px;
+    height: 26px;
+    background: #bdbdbd;
+    border-radius: 26px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+
+    @include dark {
+      background: #5c5c72;
+    }
+
+    &:hover {
+      .handle {
+        outline: 3px solid #00c3ff;
+      }
+    }
+
+    &:active {
+      .handle {
+        outline: 6px solid #00c3ff;
+      }
+    }
+
+    &.dark {
+      .handle {
+        left: 29px;
+      }
+    }
+
+    .handle {
+      outline: 1px solid transparent;
+      background: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      position: absolute;
+      transition: all 300ms;
+      top: 3px;
+      left: 3px;
+
+      @include dark {
+        background: #d5dae5;
+      }
+    }
+
+    .icon {
+      line-height: 26px;
+      font-size: 18px;
+    }
+  }
+}

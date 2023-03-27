@@ -1,13 +1,12 @@
 import React from "react";
 
-import "style/library.scss";
+import "./books.scss";
 
-import books from "data/books"
+import books from "@/data/books"
 import qs from "query-string"
-import { Link } from "react-router-dom";
-import Popup from "../component/popup/Popup";
+import Popup from "../../component/popup/Popup";
 
-export default class Library extends React.Component {
+export default class Books extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,10 +18,9 @@ export default class Library extends React.Component {
 
     render() {
         return (
-            <div className="library-wr">
+            <div className="books-wr">
                 <div className="container">
-                    <div className="library">
-                        <Link to="/" className="to-home-link">&lt; Home</Link>
+                    <div className="books">
                         <h1 className="title">My Library</h1>
                         <SearchBar  value={this.state.searchInput}
                                     onInput={e => this.onSearch(e.target.value)}/>
@@ -103,24 +101,24 @@ function BookDetailsPopup(props) {
                     </div>
                     <div className="book-popup__info">
                         <div className="book-popup__block">
-                            <div className="book-popup__label">Status:</div>
+                            <div className="book-popup__label">Status</div>
                             {book.status === "have read" && <div className="book-popup__status green">Have read</div>}
                             {book.status === "reading" && <div className="book-popup__status blue">Reading currently</div>}
                         </div>
-                        <div className="book-popup__block">
-                            <div className="book-popup__label">Authors:</div>
-                            <div className="book-popup__authors">
-                                {book.authors.map(a => <div className="book-popup__author" key={a}>{a}</div>)}
-                            </div>
-                        </div>
                         { book.comment &&
                             <div className="book-popup__block book-popup__comment-block">
-                                <div className="book-popup__label">David's thoughts:</div>
+                                <div className="book-popup__label">David's thoughts</div>
                                 <div className="book-popup__comment">
                                     {book.comment}
                                 </div>
                             </div>
                         }
+                        <div className="book-popup__block">
+                            <div className="book-popup__label">Authors</div>
+                            <div className="book-popup__authors">
+                                {book.authors.map(a => <div className="book-popup__author" key={a}>{a}</div>)}
+                            </div>
+                        </div>
                         <div className="book-popup__block">
                             <div className="book-popup__label"></div>
                             <div className="book-popup__language">This book is in {book.language}</div>
@@ -136,8 +134,7 @@ function BookDetailsPopup(props) {
                         Book not found :(
                     </div>
                 </div>
-            )
-            }
+            )}
         </Popup>
     )
 }

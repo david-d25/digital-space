@@ -1,17 +1,19 @@
 * {
   box-sizing: border-box;
+  color: var(--text-color);
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   font-size: 18px;
 }
 
 a {
   text-decoration: none;
-  color: #00c3ff;
+  color: var(--link-color);
 }
 
 html, body {
   margin: 0;
   font-family: sans-serif;
-  background-color: #f8f8f8;
+  background-color: var(--global-background-color);
 
   &:has(.requires-no-scroll) {
     overflow: hidden;
@@ -21,6 +23,10 @@ html, body {
 .container {
   max-width: 720px;
   margin: auto;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
 }
 
 $tablet-width: 768px;

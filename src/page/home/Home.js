@@ -1,24 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "style/home.scss";
+import "./home.scss";
+import Popup from "../../component/popup/Popup";
+import avatar from "#/img/avatar.jpg";
 
 export default class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            popupImageSrc: null
+        };
+    }
+
     render() {
         return (
-            <div className="main_wr">
+            <div className="c-home main_wr">
                 <div className="container">
                     <div className="main">
                         <div className="left">
                             <CoolClickEffect className="ava_wr">
-                                <img className="ava" src="img/avatar.jpg" alt="My avatar"/>
+                                <img className="ava" src={avatar} alt="My avatar"/>
                             </CoolClickEffect>
                         </div>
 
                         <div className="right">
                             <Card title="Info" className="main_info">
                                 <div className="bio">I'm David, a Java & Web developer.</div>
-                                <div className="bio">I like <a href="img/eagle_owl.jpg" target="_blank">owls</a></div>
+                                <div className="bio">I like&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/eagle_owl.jpg")}>
+                                        owls
+                                    </span>
+                                    ,&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/cat.jpg")}>
+                                        cats
+                                    </span>
+                                    ,&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/parrot.jpg")}>
+                                        parrots
+                                    </span>
+                                    , and&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/raccoon.jpg")}>
+                                        raccoons
+                                    </span>
+                                    .
+                                </div>
                             </Card>
 
                             <Card title="Contact Me" className="contacts">
@@ -39,21 +69,29 @@ export default class Home extends React.Component {
                                 <div className="interest">Memes</div>
                                 <div className="interest">OpenGL</div>
                                 <div className="interest">
-                                    <Link to="/library">Books</Link>
+                                    <Link to="/books">Books</Link>
                                 </div>
                             </Card>
                         </div>
-
-                        <s>
-                            <div className="little_comment">
-                                This page made in 30 mins and will be replaced with something cooler someday, but now I'm too lazy to do something.
-                            </div>
-                        </s>
-                        <div className="little_comment">Finally added some useful stuff.</div>
                     </div>
                 </div>
+                <Popup active={this.state.popupImageSrc} onCloseClick={() => this.closePopup()}>
+                    <img className="popup-image" src={this.state.popupImageSrc} alt="popup image"/>
+                </Popup>
             </div>
         )
+    }
+
+    showImageInPopup(src) {
+        this.setState({
+            popupImageSrc: src
+        });
+    }
+
+    closePopup() {
+        this.setState({
+            popupImageSrc: null
+        });
     }
 }
 

@@ -1,0 +1,12 @@
+body[data-theme="dark"] {
+  --global-background-color: #0f121f;
+  --link-color: #00c3ff;
+  --panel-background-color: #1e2444;
+  --text-color: #ffffff;
+}
+
+@mixin dark {
+  body[data-theme="dark"] & {
+    @content;
+  }
+}
