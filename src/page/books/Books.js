@@ -102,8 +102,13 @@ function BookDetailsPopup(props) {
                     <div className="book-popup__info">
                         <div className="book-popup__block">
                             <div className="book-popup__label">Status</div>
-                            {book.status === "have read" && <div className="book-popup__status green">Have read</div>}
-                            {book.status === "reading" && <div className="book-popup__status blue">Reading currently</div>}
+                            { book.status === "have read" && (
+                                <div className="book-popup__status green">Have read</div>
+                            ) || book.status === "reading" && (
+                                <div className="book-popup__status blue">Reading currently</div>
+                            ) || (
+                                <div className="book-popup__status">{book.status}</div>
+                            )}
                         </div>
                         { book.comment &&
                             <div className="book-popup__block book-popup__comment-block">

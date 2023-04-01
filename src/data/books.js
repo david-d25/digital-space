@@ -197,6 +197,204 @@ const books = [
         coverImage: "data/book-cover/id17.jpg",
         comment: null,
         status: "have read"
+    }, {
+        id: 18,
+        name: "Data Mining",
+        edition: null,
+        authors: ["Charu C. Aggarwal"],
+        year: 2015,
+        isbn: "978-3-319-14142-8",
+        language: "English",
+        coverImage: "data/book-cover/id18.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 19,
+        name: "GANs in action",
+        edition: null,
+        authors: ["Jakub Langr", "Vladimir Bok"],
+        year: 2019,
+        isbn: "9781617295560",
+        language: "English",
+        coverImage: "data/book-cover/id19.png",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 20,
+        name: "The Art of Electronics",
+        edition: "3rd edition",
+        authors: ["Paul Horowitz", "Winfield Hill"],
+        year: 2015,
+        isbn: "9780521809269",
+        language: "English",
+        coverImage: "data/book-cover/id20.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 21,
+        name: "Java Methods for Financial Engineering",
+        edition: null,
+        authors: ["Philip Barker"],
+        year: 2007,
+        isbn: "978-1-84628-741-1",
+        language: "English",
+        coverImage: "data/book-cover/id21.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 22,
+        name: "Learn Java 12 Programming",
+        edition: null,
+        authors: ["Nick Samoylov"],
+        year: 2019,
+        isbn: "978-1-78995-705-1",
+        language: "English",
+        coverImage: "data/book-cover/id22.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 23,
+        name: "Libgdx Cross-platform Game Development Cookbook",
+        edition: null,
+        authors: ["David Saltares Márquez", "Alberto Cejas Sánchez"],
+        year: 2014,
+        isbn: "978-1-78328-729-1",
+        language: "English",
+        coverImage: "data/book-cover/id23.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 24,
+        name: "Linux Kernel Development",
+        edition: "3rd edition",
+        authors: ["Robert Love"],
+        year: 2010,
+        isbn: "978-0-672-32946-3",
+        language: "English",
+        coverImage: "data/book-cover/id24.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 25,
+        name: "Mastering Machine Learning with Python in Six Steps",
+        edition: null,
+        authors: ["Manohar Swamynathan"],
+        year: 2017,
+        isbn: "978-1-4842-2866-1",
+        language: "English",
+        coverImage: "data/book-cover/id25.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 26,
+        name: "Mastering Voice Interfaces",
+        edition: null,
+        authors: ["Ann Thymé-Gobbel", "Charles Jankowski"],
+        year: 2021,
+        isbn: "978-1-4842-7005-9",
+        language: "English",
+        coverImage: "data/book-cover/id26.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 27,
+        name: "Natural Language Processing Recipes",
+        edition: null,
+        authors: ["Akshay Kulkarni", "Adarsha Shivananda"],
+        year: 2019,
+        isbn: "978-1-4842-4267-4",
+        language: "English",
+        coverImage: "data/book-cover/id27.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 28,
+        name: "Practical Machine Learning and Image Processing",
+        edition: null,
+        authors: ["Himanshu Singh"],
+        year: 2019,
+        isbn: "978-1-4842-4149-3",
+        language: "English",
+        coverImage: "data/book-cover/id28.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 29,
+        name: "Practical Machine Learning in JavaScript",
+        edition: null,
+        authors: ["Charlie Gerard"],
+        year: 2021,
+        isbn: "978-1-4842-6418-8",
+        language: "English",
+        coverImage: "data/book-cover/id29.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 30,
+        name: "Professional Linux® Kernel Architecture",
+        edition: null,
+        authors: ["Wolfgang Mauerer"],
+        year: 2008,
+        isbn: "978-0-470-34343-2",
+        language: "English",
+        coverImage: "data/book-cover/id30.jpg",
+        comment: null,
+        status: "shelved"
+    }, {
+        id: 31,
+        name: "Python for Data Science and AI",
+        edition: null,
+        authors: ["Jake VanderPlas"],
+        year: 2018,
+        isbn: "978-5-496-03068-7",
+        language: "Russian",
+        coverImage: "data/book-cover/id31.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 32,
+        name: "Python Machine Learning",
+        edition: "3rd edition",
+        authors: ["Sebastian Raschka", "Vahid Mirjalili"],
+        year: 2019,
+        isbn: "978-1-78995-575-0",
+        language: "English",
+        coverImage: "data/book-cover/id32.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 33,
+        name: "State-of-the-Art Deep Learning Models in TensorFlow",
+        edition: null,
+        authors: ["David Paper"],
+        year: 2021,
+        isbn: "978-1-4842-7341-8",
+        language: "English",
+        coverImage: "data/book-cover/id33.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 34,
+        name: "Essential Math for Data Science",
+        edition: null,
+        authors: ["Thomas Nield"],
+        year: 2022,
+        isbn: "978-1-098-10293-7",
+        language: "",
+        coverImage: "data/book-cover/id34.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 35,
+        name: "OpenGL 4. Shading Language. Cookbook",
+        edition: null,
+        authors: ["David Wolff"],
+        year: 2022,
+        isbn: "978-5-97060-255-3",
+        language: "Russian",
+        coverImage: "data/book-cover/id35.jpg",
+        comment: null,
+        status: "shelved"
     }
 ]
 
