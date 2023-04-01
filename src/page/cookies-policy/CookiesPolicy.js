@@ -8,7 +8,7 @@ export default class CookiesPolicy extends React.Component {
                 <h1>Cookies Policy</h1>
                 <p>Last updated: [Insert date]</p>
                 <p>
-                    This Cookies Policy explains how this website ("we", "us", "out", or "the Site") uses cookies
+                    This Cookies Policy explains how this website ("we", "us", "our", or "the Site") uses cookies
                     and similar technologies to improve your experience on this website.
                     By continuing to use the Site, you agree to our use of cookies in accordance with this policy.
                 </p>
