@@ -4,7 +4,7 @@ export enum DataStorageConsentState {
     REJECTED = "REJECTED"
 }
 
-export default  class ConfigStorageService {
+export default class ConfigStorageService {
     private static readonly DATA_STORAGE_CONSENT_KEY = "data_storage_consent";
 
     getItem(key: string): string {

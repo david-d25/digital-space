@@ -70,6 +70,17 @@
       cursor: pointer;
       color: #00c3ff;
     }
+
+    .external:after {
+      display: inline-block;
+      content: '';
+      background: url("../../../public/img/icons/external-link.svg") center / contain no-repeat;
+      vertical-align: middle;
+      width: .8em;
+      height: .8em;
+      opacity: 0.6;
+      margin-left: .2em;
+    }
   }
 
   .bio:not(:first-child) {
@@ -90,7 +101,13 @@
   }
 
   .popup-image {
-    padding-top: 40px;
     max-width: 100%;
+    max-height: 80vh;
+  }
+
+  .popup-image-title {
+    text-align: center;
+    margin: 0 25px 10px;
+    font-size: 24px;
   }
 }

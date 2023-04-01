@@ -9,7 +9,8 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            popupImageSrc: null
+            popupImageSrc: null,
+            popupImageTitle: "",
         };
     }
 
@@ -29,22 +30,28 @@ export default class Home extends React.Component {
                                 <div className="bio">I'm David, a Java & Web developer.</div>
                                 <div className="bio">I like&nbsp;
                                     <span className="clickable"
-                                          onClick={() => this.showImageInPopup("img/eagle_owl.jpg")}>
+                                          onClick={() => this.showImageInPopup("img/eagle_owl.jpg", "Yoll the Eagle-Owl!")}>
                                         owls
                                     </span>
                                     ,&nbsp;
                                     <span className="clickable"
-                                          onClick={() => this.showImageInPopup("img/cat.jpg")}>
+                                          onClick={() => this.showImageInPopup("img/cat.jpg", "This cat's name is Hina")}>
                                         cats
                                     </span>
                                     ,&nbsp;
-                                    <span className="clickable"
-                                          onClick={() => this.showImageInPopup("img/parrot.jpg")}>
+                                    <a className="clickable external"
+                                       href="https://www.instagram.com/twinkietheparrot/"
+                                       target="_blank">
                                         parrots
+                                    </a>
+                                    ,&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/fox.jpg", "🥺👉👈")}>
+                                        foxes
                                     </span>
                                     , and&nbsp;
                                     <span className="clickable"
-                                          onClick={() => this.showImageInPopup("img/raccoon.jpg")}>
+                                          onClick={() => this.showImageInPopup("img/raccoon.jpg", "A raccoon")}>
                                         raccoons
                                     </span>
                                     .
@@ -76,15 +83,17 @@ export default class Home extends React.Component {
                     </div>
                 </div>
                 <Popup active={this.state.popupImageSrc} onCloseClick={() => this.closePopup()}>
+                    <div className="popup-image-title">{this.state.popupImageTitle}</div>
                     <img className="popup-image" src={this.state.popupImageSrc} alt="popup image"/>
                 </Popup>
             </div>
         )
     }
 
-    showImageInPopup(src) {
+    showImageInPopup(src, title) {
         this.setState({
-            popupImageSrc: src
+            popupImageSrc: src,
+            popupImageTitle: title
         });
     }
 

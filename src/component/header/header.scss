@@ -1,4 +1,5 @@
 @import "@/style/common.scss";
+@import "@/style/theme-dark.scss";
 
 .c-header {
   background: var(--panel-background-color);
@@ -33,6 +34,10 @@
           background: rgba(0, 0, 0, 0.1);
           color: var(--text-color);
           border-radius: 5px;
+
+          @include dark {
+            background: rgba(255, 255, 255, 0.1);
+          }
         }
       }
     }

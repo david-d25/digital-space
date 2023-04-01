@@ -19,7 +19,7 @@ const books = [
         isbn: "978-5-91671-947-5",
         language: "Russian",
         coverImage: "data/book-cover/id1.jpg",
-        comment: "This book explains how companies use storytelling and build product ecosystems to sell things better. Very easy and fun to read, I recommend it.",
+        comment: "This book explains why some stories are more interesting than others, how it is connected with the survival of ancient people and how companies use it to create product ecosystems in the modern post-advertising world. Very easy and fun to read, I recommend it.",
         status: "have read"
     }, {
         id: 2,
@@ -196,7 +196,7 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id17.jpg",
         comment: null,
-        status: "reading"
+        status: "have read"
     }
 ]
 

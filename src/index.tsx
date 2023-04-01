@@ -15,6 +15,7 @@ import {RecoilRoot} from "recoil";
 
 import "@/style/theme-light.scss";
 import "@/style/theme-dark.scss";
+import CookiesSettings from "./page/cookies-settings/CookiesSettings";
 
 const configStorage = new ConfigStorageService();
 
@@ -29,6 +30,7 @@ root.render(
                     <Route path="/" element={<Home/>}/>
                     <Route path="/books" element={<Books/>}/>
                     <Route path="/cookies-policy" element={<CookiesPolicy/>}/>
+                    <Route path="/cookies-settings" element={<CookiesSettings/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
                 <Footer/>
