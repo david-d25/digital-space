@@ -9,15 +9,12 @@ import Header from "./component/header/Header";
 import CookiesPolicy from "./page/cookies-policy/CookiesPolicy";
 import Footer from "./component/footer/Footer";
 import AutoScrollToTop from "./util/AutoScrollToTop";
-import ConfigStorageService from "./service/ConfigStorageService";
 import CookiesPopup from "./component/cookies-popup/CookiesPopup";
 import {RecoilRoot} from "recoil";
 
 import "@/style/theme-light.scss";
 import "@/style/theme-dark.scss";
 import CookiesSettings from "./page/cookies-settings/CookiesSettings";
-
-const configStorage = new ConfigStorageService();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,7 +31,7 @@ root.render(
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
                 <Footer/>
-                <CookiesPopup configStorage={configStorage}/>
+                <CookiesPopup/>
             </BrowserRouter>
         </RecoilRoot>
     </React.StrictMode>

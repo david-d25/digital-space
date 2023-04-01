@@ -1,40 +1,30 @@
 import "./cookies-popup.scss";
 import {Link} from "react-router-dom";
-import ConfigStorageService, {DataStorageConsentState} from "../../service/ConfigStorageService";
+import {DataStorageConsentState} from "../../service/ConfigService";
 import React from "react";
+import {useRecoilState} from "recoil";
+import {servicesState} from "../../state/servicesState";
 
-export default class CookiesPopup extends React.Component<{ configStorage: ConfigStorageService }, { show: boolean }> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: props.configStorage.getCookiesConsentState() == DataStorageConsentState.NULL
-        }
-    }
+export default function CookiesPopup() {
+    const [services] = useRecoilState(servicesState);
+    const [cookiesConsentState, setCookiesConsentState] = useRecoilState(services.configService.cookiesConsentState);
 
-    render() {
-        return (
-             this.state.show && (
-                <div className="c-cookies-popup">
-                    <div className="message">
-                        This website needs to use Cookies and LocalStorage.
-                        Check out our <Link to="/cookies-policy">Cookies Policy</Link> for more info.
-                    </div>
-                    <div className="buttons">
-                        <button className="button" onClick={() => this.onAcceptClick()}>Accept</button>
-                        <button className="button" onClick={() => this.onRejectClick()}>Reject</button>
-                    </div>
+    return (
+        cookiesConsentState == DataStorageConsentState.NULL && (
+            <div className="c-cookies-popup">
+                <div className="message">
+                    This website needs to use Cookies and LocalStorage.
+                    Check out our <Link to="/cookies-policy">Cookies Policy</Link> for more info.
                 </div>
-            )
-        );
-    }
-
-    onAcceptClick() {
-        this.props.configStorage.setCookiesConsentState(DataStorageConsentState.ACCEPTED);
-        this.setState({ show: false });
-    }
-
-    onRejectClick() {
-        this.props.configStorage.setCookiesConsentState(DataStorageConsentState.REJECTED);
-        this.setState({ show: false });
-    }
+                <div className="buttons">
+                    <button className="button" onClick={() => setCookiesConsentState(DataStorageConsentState.ACCEPTED)}>
+                        Accept
+                    </button>
+                    <button className="button" onClick={() => setCookiesConsentState(DataStorageConsentState.REJECTED)}>
+                        Reject
+                    </button>
+                </div>
+            </div>
+        )
+    );
 }

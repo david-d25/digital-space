@@ -1,11 +1,23 @@
+import {atom} from "recoil";
+
 export enum DataStorageConsentState {
     NULL = "NULL",
     ACCEPTED = "ACCEPTED",
     REJECTED = "REJECTED"
 }
 
-export default class ConfigStorageService {
+export default class ConfigService {
     private static readonly DATA_STORAGE_CONSENT_KEY = "data_storage_consent";
+
+    public cookiesConsentState = atom({
+        key: 'cookiesConsentState',
+        default: this.getCookiesConsentState(),
+        effects: [
+            ({onSet}) => {
+                onSet(v => this.setCookiesConsentState(v));
+            }
+        ]
+    });
 
     getItem(key: string): string {
         return localStorage.getItem(key);
@@ -16,16 +28,16 @@ export default class ConfigStorageService {
             localStorage.setItem(key, value);
     }
 
-    getCookiesConsentState(): DataStorageConsentState {
-        const value = localStorage.getItem(ConfigStorageService.DATA_STORAGE_CONSENT_KEY);
+    private getCookiesConsentState(): DataStorageConsentState {
+        const value = localStorage.getItem(ConfigService.DATA_STORAGE_CONSENT_KEY);
         if (value)
             return value === "ACCEPTED" ? DataStorageConsentState.ACCEPTED : DataStorageConsentState.REJECTED;
         return DataStorageConsentState.NULL;
     }
 
-    setCookiesConsentState(state: DataStorageConsentState) {
+    private setCookiesConsentState(state: DataStorageConsentState) {
         if (state !== DataStorageConsentState.ACCEPTED)
             localStorage.clear();
-        localStorage.setItem(ConfigStorageService.DATA_STORAGE_CONSENT_KEY, state.toString());
+        localStorage.setItem(ConfigService.DATA_STORAGE_CONSENT_KEY, state.toString());
     }
 }
