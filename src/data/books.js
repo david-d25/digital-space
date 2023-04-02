@@ -395,6 +395,17 @@ const books = [
         coverImage: "data/book-cover/id35.jpg",
         comment: null,
         status: "shelved"
+    }, {
+        id: 36,
+        name: "The Little Prince",
+        edition: null,
+        authors: ["Antoine de Saint-Exupéry"],
+        year: 2019,
+        isbn: "9781405216340",
+        language: "English",
+        coverImage: "data/book-cover/id36.jpg",
+        comment: null,
+        status: "in queue"
     }
 ]
 
