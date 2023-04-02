@@ -44,11 +44,6 @@ export default class Home extends React.Component {
                                        target="_blank">
                                         parrots
                                     </a>
-                                    ,&nbsp;
-                                    <span className="clickable"
-                                          onClick={() => this.showImageInPopup("img/fox.jpg", "🥺👉👈")}>
-                                        foxes
-                                    </span>
                                     , and&nbsp;
                                     <span className="clickable"
                                           onClick={() => this.showImageInPopup("img/raccoon.jpg", "A raccoon")}>

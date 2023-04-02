@@ -58,7 +58,7 @@
     }
 
     @include dark {
-        border: 1px solid #3f4e8a;
+        border: 1px solid #37384f;
     }
 }
 
@@ -199,11 +199,13 @@
 }
 
 .book-popup__comment-block {
-    border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     padding: 8px;
-    margin-left: -10px;
+    margin-left: -13px;
     margin-right: -10px;
+    border: 5px none rgba(0, 0, 0, 0.2);
+    border-left-style: solid;
+    background: rgba(127, 127, 127, 0.1);
 
     @include dark {
         border-color: rgba(255, 255, 255, 0.2);
@@ -239,7 +241,7 @@
     color: white;
     display: inline-block;
     text-transform: capitalize;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.7);
 
     @include dark {
         background: rgba(255, 255, 255, 0.2);
@@ -247,9 +249,17 @@
 
     &.green {
         background: rgb(0, 128, 0);
+
+        @include dark {
+            background: rgb(19, 98, 19);
+        }
     }
 
     &.blue {
         background: rgb(0, 0, 128);
+
+        @include dark {
+            background: rgb(15, 15, 154);
+        }
     }
 }

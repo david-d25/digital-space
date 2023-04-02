@@ -118,7 +118,7 @@ const books = [
         isbn: "0-672-32453-9",
         language: "English",
         coverImage: "data/book-cover/id10.jpg",
-        comment: null,
+        comment: "A big book covering a wide variety of data structures and algorithms with a lot of full code examples and illustrations.",
         status: "have read"
     }, {
         id: 11,
@@ -129,7 +129,7 @@ const books = [
         isbn: "1-55622-912-7",
         language: "English",
         coverImage: "data/book-cover/id11.jpg",
-        comment: null,
+        comment: "This book is more like a collection of popular game designer interviews and classic games stories. Though you shouldn't expect to become a game designer with this book, it's interesting to find out what game development felt like at the beginning of the gaming industry.",
         status: "have read"
     }, {
         id: 12,
@@ -404,6 +404,39 @@ const books = [
         isbn: "9781405216340",
         language: "English",
         coverImage: "data/book-cover/id36.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 37,
+        name: "The Selfish Gene",
+        edition: null,
+        authors: ["Richard Dawkins"],
+        year: 1993,
+        isbn: "978-5-17-077772-3",
+        language: "Russian",
+        coverImage: "data/book-cover/id37.jpg",
+        comment: null,
+        status: "in queue"
+    }, {
+        id: 38,
+        name: "Pro Python 3",
+        edition: null,
+        authors: ["J. Burton Browning", "Marty Alchin"],
+        year: 2019,
+        isbn: "978-1-4842-4385-5",
+        language: "English",
+        coverImage: "data/book-cover/id38.jpg",
+        comment: null,
+        status: "reading"
+    }, {
+        id: 39,
+        name: "Data Science from Scratch",
+        edition: "2nd edition",
+        authors: ["Joel Grus"],
+        year: 2019,
+        isbn: "978-1-492-04113-9",
+        language: "English",
+        coverImage: "data/book-cover/id39.jpg",
         comment: null,
         status: "in queue"
     }
