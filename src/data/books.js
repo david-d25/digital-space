@@ -420,7 +420,7 @@ const books = [
     }, {
         id: 38,
         name: "Pro Python 3",
-        edition: null,
+        edition: "3rd edition",
         authors: ["J. Burton Browning", "Marty Alchin"],
         year: 2019,
         isbn: "978-1-4842-4385-5",
