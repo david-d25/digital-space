@@ -8,6 +8,7 @@ import {servicesState} from "../../state/servicesState";
 export default function CookiesSettings() {
     const [services] = useRecoilState(servicesState);
     const [cookiesConsentState, setCookiesConsentState] = useRecoilState(services.configService.cookiesConsentState);
+    document.title = "Cookies Settings";
     return (
         <div className="c-cookies-settings">
             <h1>Cookies Settings</h1>

@@ -15,6 +15,7 @@ export default class Home extends React.Component {
     }
 
     render() {
+        document.title = "David's Digital Space";
         return (
             <div className="c-home main_wr">
                 <div className="container">

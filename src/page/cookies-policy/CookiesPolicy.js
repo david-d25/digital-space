@@ -3,6 +3,7 @@ import React from "react";
 
 export default class CookiesPolicy extends React.Component {
     render() {
+        document.title = "Cookies Policy";
         return (
             <div className="c-cookies-policy container">
                 <h1>Cookies Policy</h1>

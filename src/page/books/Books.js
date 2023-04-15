@@ -49,6 +49,7 @@ export default class Books extends React.Component {
             const book = books.find(b => b.id.toString() === bookIdQueryParam);
             this.openBookPopup(book);
         }
+        this.updateTitle();
     }
 
     onSearch = (query) => {
@@ -72,6 +73,14 @@ export default class Books extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.updateUrl();
+        this.updateTitle();
+    }
+
+    updateTitle() {
+        let title = "Books";
+        if (this.state.popupBook != null)
+            title = this.state.popupBook.name;
+        document.title = title;
     }
 
     updateUrl() {

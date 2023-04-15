@@ -4,6 +4,7 @@ import "@/page/not-found/not-found.scss"
 import React from "react";
 
 export default function NotFound() {
+    document.title = "Not Found";
     return (
         <div className="not-found-wr">
             <div className="not-found">
