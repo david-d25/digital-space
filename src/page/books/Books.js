@@ -78,8 +78,9 @@ export default class Books extends React.Component {
 
     updateTitle() {
         let title = "Books";
-        if (this.state.popupBook != null)
-            title = this.state.popupBook.name;
+        const { popupBook, popupActive } = this.state;
+        if (popupActive && popupBook != null)
+            title = popupBook.name;
         document.title = title;
     }
 
