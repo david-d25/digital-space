@@ -41,7 +41,7 @@ const books = [
         isbn: "978-978-5-91671-841-6",
         language: "Russian",
         coverImage: "data/book-cover/id3.jpg",
-        comment: "Quite a specific book. This book explains this world using a mix of four fundamental things: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Some chapters are easy to read, some are hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. The parallel universes in the context of this book are not the ones shown in movies.",
+        comment: "Quite a specific book. It explains this world using a mix of four fundamental things: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Some chapters are easy to read, some are hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. The parallel universes in the context of this book are not the ones shown in movies.",
         status: "have read"
     }, {
         id: 4,
@@ -195,7 +195,7 @@ const books = [
         isbn: "978-0-7897-5774-6",
         language: "English",
         coverImage: "data/book-cover/id17.jpg",
-        comment: null,
+        comment: "I was not going to be a C++ programmer at the time of reading this book, so I've read it just for general knowledge. As a Java developer, I can say that this book gives a good understanding of language fundamentals and how writing in C++ feels like. I think this book may be a good start for a beginner-level programmer. What is good about this book is that each code sample has a detailed explanation and each lesson has a Q&A and exercises section for self testing.",
         status: "have read"
     }, {
         id: 18,
@@ -426,8 +426,8 @@ const books = [
         isbn: "978-1-4842-4385-5",
         language: "English",
         coverImage: "data/book-cover/id38.jpg",
-        comment: null,
-        status: "reading"
+        comment: "If you know me well, you know that I generally like Apress books, and this one too. It is designed for intermediate developers already familiar with some Python basics as it covers more advanced topics and teaches general Python development philosophy throughout the whole book. The book also covers some exciting Python extensions besides the core Python itself.",
+        status: "have read"
     }, {
         id: 39,
         name: "Data Science from Scratch",
@@ -438,7 +438,7 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id39.jpg",
         comment: null,
-        status: "in queue"
+        status: "reading"
     }
 ]
 

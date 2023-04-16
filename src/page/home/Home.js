@@ -131,8 +131,10 @@ class CoolClickEffect extends React.Component {
         if (event.target.tagName === "A")
             return;
         const rect = this.el.getBoundingClientRect();
-        const rotationY = (2*(event.clientX - rect.x)/rect.width - 1)*10;
-        const rotationX = (2*(event.clientY - rect.y)/rect.height - 1)*10;
+        const normalizedX = (event.clientX - rect.x)/rect.width;
+        const normalizedY = (event.clientY - rect.y)/rect.height;
+        const rotationY = (2*normalizedX - 1)*10;
+        const rotationX = (2*normalizedY - 1)*10;
         const scale = 1;
         this.coolEffects = {rotationX, rotationY, scale};
         this.previousAnimationTimestamp = null;
