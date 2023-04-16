@@ -167,7 +167,7 @@ function SearchBar(props) {
 }
 
 function BookList(props) {
-    const filteredBooks = filterBooks(props.books, props.searchFilter)
+    const filteredBooks = filterBooks(props.books, props.searchFilter);
     return (
         <div className="book-list">
             {filteredBooks.map(book =>
@@ -179,7 +179,7 @@ function BookList(props) {
 }
 
 function BookCard(props) {
-    const book = props.book
+    const book = props.book;
     return (
         <div className="book-item" onClick={props.onClick}>
             { book.status &&
@@ -200,13 +200,17 @@ function BookCard(props) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function filterBooks(books, query) {
-    return books.filter(b => bookFilter(b, query))
+    return books.filter(b => bookFilter(b, query));
 }
 
 function bookFilter(book, query) {
-    return !query || (book.name && book.name.toLowerCase().includes(query.toLowerCase()));
+    return (
+        !query ||
+        book.name && book.name.toLowerCase().includes(query.toLowerCase()) ||
+        book.authors.some(author => author.toLowerCase().includes(query.toLowerCase()))
+    );
 }
