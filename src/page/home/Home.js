@@ -70,7 +70,6 @@ export default class Home extends React.Component {
                                 <div className="interest">Java</div>
                                 <div className="interest">Web</div>
                                 <div className="interest">Memes</div>
-                                <div className="interest">OpenGL</div>
                                 <div className="interest">
                                     <Link to="/books">Books</Link>
                                 </div>
@@ -131,8 +130,9 @@ class CoolClickEffect extends React.Component {
         if (event.target.tagName === "A")
             return;
         const rect = this.el.getBoundingClientRect();
-        const normalizedX = (event.clientX - rect.x)/rect.width;
-        const normalizedY = (event.clientY - rect.y)/rect.height;
+        const clamp = (x, min, max) => { return Math.min(Math.max(x, min), max) }
+        const normalizedX = clamp((event.clientX - rect.x)/rect.width, 0, 1);
+        const normalizedY = clamp((event.clientY - rect.y)/rect.height, 0, 1);
         const rotationY = (2*normalizedX - 1)*10;
         const rotationX = (2*normalizedY - 1)*10;
         const scale = 1;

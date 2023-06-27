@@ -416,7 +416,7 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id37.jpg",
         comment: null,
-        status: "in queue"
+        status: "reading"
     }, {
         id: 38,
         name: "Pro Python 3",
@@ -428,17 +428,6 @@ const books = [
         coverImage: "data/book-cover/id38.jpg",
         comment: "If you know me well, you know that I generally like Apress books, and this one too. It is designed for intermediate developers already familiar with some Python basics as it covers more advanced topics and teaches general Python development philosophy throughout the whole book. The book also covers some exciting Python extensions besides the core Python itself.",
         status: "have read"
-    }, {
-        id: 39,
-        name: "Data Science from Scratch",
-        edition: "2nd edition",
-        authors: ["Joel Grus"],
-        year: 2019,
-        isbn: "978-1-492-04113-9",
-        language: "English",
-        coverImage: "data/book-cover/id39.jpg",
-        comment: null,
-        status: "reading"
     }
 ]
 

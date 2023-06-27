@@ -182,11 +182,11 @@ function BookCard(props) {
     const book = props.book;
     return (
         <div className="book-item" onClick={props.onClick}>
-            { book.status &&
-                <div className={`book-item__status ${book.status === 'have read' && 'green'} ${book.status === 'reading' && 'blue'}`}>
-                    {book.status}
-                </div>
-            }
+            {/*{ book.status &&*/}
+            {/*    <div className={`book-item__status ${book.status === 'have read' && 'green'} ${book.status === 'reading' && 'blue'}`}>*/}
+            {/*        {book.status}*/}
+            {/*    </div>*/}
+            {/*}*/}
             <div className="book-item__img-wr">
                 <img className="book-item__img" src={book.coverImage} alt={book.name}/>
             </div>

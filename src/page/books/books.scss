@@ -55,6 +55,7 @@
 
     @include phone {
         width: 320px;
+        display: inline-flex;
     }
 
     @include dark {
@@ -84,6 +85,10 @@
 
 .book-item__img-wr {
     padding: 10px 5px 5px;
+    flex: 3;
+    @include phone {
+        padding: 10px;
+    }
 }
 
 .book-item__img {
@@ -96,6 +101,10 @@
 .book-item-info {
     padding: 10px;
     text-align: center;
+    @include phone {
+        text-align: left;
+        flex: 5;
+    }
 }
 
 .book-item-info__title {

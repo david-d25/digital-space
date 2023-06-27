@@ -14,7 +14,7 @@ export default function() {
                     </div>
                     <div className="links">
                         <Link className={"link" + (useMatch('/') ? ' active' : '')} to="/">Home</Link>
-                        <Link className={"link" + (useMatch('/books') ? ' active' : '')} to="/books">Books</Link>
+                        <Link className={"link" + (useMatch('/books') ? ' active' : '')} to="/books">Library</Link>
                     </div>
                     <div className="theme-switch">
                         <ThemeSwitch/>
