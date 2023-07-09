@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./books.scss";
 
 import books from "@/data/books"
 import qs from "query-string"
 import Popup from "../../component/popup/Popup";
+import AnimateHeight from "react-animate-height";
 
 export default class Books extends React.Component {
     constructor(props) {
@@ -12,7 +13,11 @@ export default class Books extends React.Component {
         this.state = {
             searchInput: "",
             popupActive: false,
-            popupBook: null
+            popupBook: null,
+            filters: {
+                statusOneOf: null,
+                hideGeekyItBooks: true
+            }
         }
     }
 
@@ -22,14 +27,25 @@ export default class Books extends React.Component {
                 <div className="container">
                     <div className="books">
                         <h1 className="title">My Library</h1>
-                        <SearchBar  value={this.state.searchInput}
-                                    onInput={e => this.onSearch(e.target.value)}/>
-                        <BookList   books={books}
-                                    searchFilter={this.state.searchInput}
-                                    onBookClick={this.openBookPopup}/>
-                        <BookDetailsPopup   book={this.state.popupBook}
-                                            active={this.state.popupActive}
-                                            onCloseClick={this.closePopup}/>
+                        <SearchBar
+                            value={this.state.searchInput}
+                            onInput={e => this.onSearch(e.target.value)}
+                        />
+                        <SearchFilters
+                            filters={this.state.filters}
+                            onFiltersChange={filters => this.setState({filters})}
+                        />
+                        <BookList
+                            books={books}
+                            filters={this.state.filters}
+                            searchFilter={this.state.searchInput}
+                            onBookClick={this.openBookPopup}
+                        />
+                        <BookDetailsPopup
+                            book={this.state.popupBook}
+                            active={this.state.popupActive}
+                            onCloseClick={this.closePopup}
+                        />
                     </div>
                 </div>
             </div>
@@ -151,7 +167,7 @@ function BookDetailsPopup(props) {
                 </div>
             )}
         </Popup>
-    )
+    );
 }
 
 function SearchBar(props) {
@@ -163,11 +179,74 @@ function SearchBar(props) {
                     onInput={e => props.onInput(e)}
             />
         </div>
-    )
+    );
+}
+
+function SearchFilters(props) {
+    const [ opened, setOpened ] = useState(false);
+
+    let { statusOneOf, hideGeekyItBooks } = props.filters;
+    let { onFiltersChange } = props;
+
+    const statusNames = {
+        'have read': 'Have read',
+        'reading': 'Reading currently',
+        'in queue': 'In queue',
+        'shelved': 'Shelved'
+    }
+
+    function onStatusOneOfChange(status, enabled) {
+        if (statusOneOf == null)
+            statusOneOf = Object.keys(statusNames);
+        const newStatuses = enabled ? [...statusOneOf, status] : statusOneOf.filter(s => s !== status);
+        onFiltersChange({ ...props.filters, statusOneOf: newStatuses });
+    }
+
+    return (
+        <div className={`search-filters ${ opened ? 'opened' : ''}`}>
+            <AnimateHeight duration={300} height={opened ? 'auto' : 0}>
+                <div className={`search-filters__content ${opened && 'opened'}`}>
+                    <div className="search-filters__filter-title">Book status:</div>
+                    <label className="search-filters__item">
+                        <input
+                            type="checkbox"
+                            checked={statusOneOf == null || Object.keys(statusNames).every(status => statusOneOf.includes(status))}
+                            onChange={e => onFiltersChange({ ...props.filters, statusOneOf: e.target.checked ? null : [] })}
+                        />
+                        <span>All</span>
+                    </label>
+                    { Object.keys(statusNames).map(status => (
+                        <label className="search-filters__item" key={status}>
+                            <input
+                                type="checkbox"
+                                checked={statusOneOf == null || statusOneOf.includes(status)}
+                                onChange={e => onStatusOneOfChange(status, e.target.checked)}
+                            />
+                            <span>{statusNames[status]}</span>
+                        </label>
+                    ))}
+                    <div className="search-filters__filter-title">Other:</div>
+                    <label className="search-filters__item">
+                        <input
+                            type="checkbox"
+                            checked={hideGeekyItBooks}
+                            onChange={e => props.onFiltersChange({ ...props.filters, hideGeekyItBooks: e.target.checked })}
+                        />
+                        <span>Hide geeky IT books</span>
+                    </label>
+                </div>
+            </AnimateHeight>
+            {opened &&
+                <button className="search-filters__hide" onClick={() => setOpened(false)}>Hide filters</button>
+                ||
+                <button className="search-filters__show" onClick={() => setOpened(true)}>Show filters</button>
+            }
+        </div>
+    );
 }
 
 function BookList(props) {
-    const filteredBooks = filterBooks(props.books, props.searchFilter);
+    const filteredBooks = filterBooks(props.books, props.searchFilter, props.filters);
     return (
         <div className="book-list">
             {filteredBooks.map(book =>
@@ -203,14 +282,23 @@ function BookCard(props) {
     );
 }
 
-function filterBooks(books, query) {
-    return books.filter(b => bookFilter(b, query));
+function filterBooks(books, query, filters) {
+    return books.filter(b => bookFilter(b, query, filters));
 }
 
-function bookFilter(book, query) {
-    return (
+function bookFilter(book, query, filters) {
+    const passedSearch = (
         !query ||
         book.name && book.name.toLowerCase().includes(query.toLowerCase()) ||
-        book.authors.some(author => author.toLowerCase().includes(query.toLowerCase()))
+        book.authors.some(author => author.toLowerCase().includes(query.toLowerCase())) ||
+        book.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
     );
+    const passedFilters = (
+        !filters.statusOneOf ||
+        filters.statusOneOf.includes(book.status)
+    ) && (
+        !filters.hideGeekyItBooks ||
+        !book.tags.includes('information technology')
+    );
+    return passedSearch && passedFilters;
 }

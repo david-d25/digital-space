@@ -1,0 +1,9 @@
+.main-viewport {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-contents {
+  overflow: auto;
+}

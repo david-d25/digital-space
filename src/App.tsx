@@ -9,11 +9,13 @@ import CookiesPolicy from "./page/cookies-policy/CookiesPolicy";
 import Footer from "./component/footer/Footer";
 import AutoScrollToTop from "./util/AutoScrollToTop";
 import CookiesPopup from "./component/cookies-popup/CookiesPopup";
+import CookiesSettings from "./page/cookies-settings/CookiesSettings";
 import {RecoilRoot} from "recoil";
 
 import "@/style/theme-light.scss";
 import "@/style/theme-dark.scss";
-import CookiesSettings from "./page/cookies-settings/CookiesSettings";
+
+import './App.scss';
 
 export default function() {
     return (
@@ -21,15 +23,19 @@ export default function() {
             <RecoilRoot>
                 <BrowserRouter>
                     <AutoScrollToTop/>
-                    <Header/>
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="/books" element={<Books/>}/>
-                        <Route path="/cookies-policy" element={<CookiesPolicy/>}/>
-                        <Route path="/cookies-settings" element={<CookiesSettings/>}/>
-                        <Route path="*" element={<NotFound/>}/>
-                    </Routes>
-                    <Footer/>
+                    <div className="main-viewport">
+                        <Header/>
+                        <div className='page-contents'>
+                            <Routes>
+                                <Route path="/" element={<Home/>}/>
+                                <Route path="/books" element={<Books/>}/>
+                                <Route path="/cookies-policy" element={<CookiesPolicy/>}/>
+                                <Route path="/cookies-settings" element={<CookiesSettings/>}/>
+                                <Route path="*" element={<NotFound/>}/>
+                            </Routes>
+                            <Footer/>
+                        </div>
+                    </div>
                     <CookiesPopup/>
                 </BrowserRouter>
             </RecoilRoot>

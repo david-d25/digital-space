@@ -1,7 +1,12 @@
 * {
   box-sizing: border-box;
   color: var(--text-color);
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  transition: background-color 300ms ease-in-out,
+              color 300ms ease-in-out,
+              border-top-color 300ms ease-in-out,
+              border-right-color 300ms ease-in-out,
+              border-bottom-color 300ms ease-in-out,
+              border-left-color 300ms ease-in-out;
   font-size: 18px;
 }
 

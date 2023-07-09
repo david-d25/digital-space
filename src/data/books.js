@@ -9,7 +9,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id0.jpg",
         comment: "This book gives a good general understanding of how operating systems work. The first half of book covers the historical aspect of operating systems' evolution. The other half covers the practical implementation of their different parts. Overall, it's not too hard to read, I would recommend it for anyone who is curious.",
-        status: "have read"
+        status: "have read",
+        tags: ["operating systems", "computer science", "tanenbaum", "information technology"]
     }, {
         id: 1,
         name: "Storynomics",
@@ -20,7 +21,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id1.jpg",
         comment: "This book explains why some stories are more interesting than others, how it is connected with the survival of ancient people and how companies use it to create product ecosystems in the modern post-advertising world. Very easy and fun to read, I recommend it.",
-        status: "have read"
+        status: "have read",
+        tags: ["storytelling", "marketing", "business", "product"]
     }, {
         id: 2,
         name: "Introduction to Microcomputers",
@@ -31,7 +33,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id2.png",
         comment: "A book of Legendary level 🔥",
-        status: "have read"
+        status: "have read",
+        tags: ["computer science", "hardware", "microcomputers", "assembly", "architecture", "information technology"]
     }, {
         id: 3,
         name: "The Fabric of Reality",
@@ -42,7 +45,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id3.jpg",
         comment: "Quite a specific book. It explains this world using a mix of four fundamental things: epistemology, quantum mechanics, theory of computation, and the universal theory of evolution. Some chapters are easy to read, some are hard. I'm not sure I fully understand it. The books covers a wide range of things, and may change how you see the world. The parallel universes in the context of this book are not the ones shown in movies.",
-        status: "have read"
+        status: "have read",
+        tags: ["physics", "philosophy", "science", "evolution", "quantum mechanics", "computation"]
     }, {
         id: 4,
         name: "Game Design",
@@ -53,7 +57,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id4.jpg",
         comment: "I'm not a game designer, so I've read this book just out of curiosity, but it has far exceeded my expectations. It is indeed a splendid book for anyone who is interested in how (not only computer) games work. You don't have to make games to have fun reading this book.",
-        status: "have read"
+        status: "have read",
+        tags: ["game design", "game development", "game theory", "psychology", "business", "product"]
     }, {
         id: 5,
         name: "Architecture of The Base Computer",
@@ -64,7 +69,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id5.png",
         comment: "Don't even think about reading this if you're not a hardware engineer :))",
-        status: "have read"
+        status: "have read",
+        tags: ["computer science", "hardware", "microcomputers", "assembly", "architecture", "information technology"]
     }, {
         id: 6,
         name: "Grokking Algorithms",
@@ -75,7 +81,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id6.jpg",
         comment: "Just a good book to learn algorithms casually. It uses nice drawn pictures and Python examples. If you're new to programming, this book is good for you.",
-        status: "have read"
+        status: "have read",
+        tags: ["algorithms", "computer science", "python", "programming", "information technology"]
     }, {
         id: 7,
         name: "Thinking in Java",
@@ -86,7 +93,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id7.jpg",
         comment: "A good book covering a wide variety of Java stuff, no comments.",
-        status: "have read"
+        status: "have read",
+        tags: ["java", "programming", "information technology"]
     }, {
         id: 8,
         name: "Compilers",
@@ -97,7 +105,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id8.png",
         comment: "I'm not a compiler engineer, so I've read this book just out of curiosity. It's quite hard to read and understand everything, but it gave me some basic understanding of what methods and principles do compilers use to work.",
-        status: "have read"
+        status: "have read",
+        tags: ["compilers", "computer science", "programming", "information technology"]
     }, {
         id: 9,
         name: "Hoolinomics",
@@ -108,7 +117,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id9.jpg",
         comment: "Well, I can't say I became a pro economist reading this, but it was definitely a very fun and interesting book. You can read this even if you don't give a damn about economics.",
-        status: "have read"
+        status: "have read",
+        tags: ["economics", "business", "product"]
     }, {
         id: 10,
         name: "Data Structures & Algorithms in Java",
@@ -119,7 +129,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id10.jpg",
         comment: "A big book covering a wide variety of data structures and algorithms with a lot of full code examples and illustrations.",
-        status: "have read"
+        status: "have read",
+        tags: ["algorithms", "data structures", "java", "programming", "information technology"]
     }, {
         id: 11,
         name: "Game Design: Theory & Practice",
@@ -130,7 +141,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id11.jpg",
         comment: "This book is more like a collection of popular game designer interviews and classic games stories. Though you shouldn't expect to become a game designer with this book, it's interesting to find out what game development felt like at the beginning of the gaming industry.",
-        status: "have read"
+        status: "have read",
+        tags: ["game design", "game development", "game theory", "business", "product"]
     }, {
         id: 12,
         name: "Nginx From Beginner to Pro",
@@ -141,7 +153,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id12.jpg",
         comment: null,
-        status: "have read"
+        status: "have read",
+        tags: ["nginx", "web", "information technology"]
     }, {
         id: 13,
         name: "Cognitive Behavior Therapy",
@@ -152,7 +165,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id13.jpg",
         comment: "Despite this book being written for therapists, it's very easy to read and it has a lot of good tips and methods for solving cognitive problems. Though you should find a real therapist anyway if you have depression or anything alike.",
-        status: "have read"
+        status: "have read",
+        tags: ["psychology", "cognitive behavior therapy"]
     }, {
         id: 14,
         name: "Pro Spring 5",
@@ -163,7 +177,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id14.jpg",
         comment: "As always, Apress published a very good high-quality learning material. If you know Java, but you're new to DI & IoC, this book is for you. It uses a guided discovery learning method where you first 'invent' Spring Framework by yourself at the beginning of the book, which I consider a very good way of learning things.",
-        status: "have read"
+        status: "have read",
+        tags: ["spring", "java", "programming", "information technology"]
     }, {
         id: 15,
         name: "Low-Level Programming",
@@ -174,7 +189,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id15.jpg",
         comment: null,
-        status: "have read"
+        status: "have read",
+        tags: ["low-level programming", "programming", "c language", "assembly", "information technology"]
     }, {
         id: 16,
         name: "Getting Started with Hazelcast",
@@ -185,7 +201,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id16.jpg",
         comment: null,
-        status: "have read"
+        status: "have read",
+        tags: ["hazelcast", "java", "programming", "information technology"]
     }, {
         id: 17,
         name: "C++ in One Hour a Day",
@@ -196,7 +213,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id17.jpg",
         comment: "I was not going to be a C++ programmer at the time of reading this book, so I've read it just for general knowledge. As a Java developer, I can say that this book gives a good understanding of language fundamentals and how writing in C++ feels like. I think this book may be a good start for a beginner-level programmer. What is good about this book is that each code sample has a detailed explanation and each lesson has a Q&A and exercises section for self testing.",
-        status: "have read"
+        status: "have read",
+        tags: ["c++", "programming", "information technology"]
     }, {
         id: 18,
         name: "Data Mining",
@@ -207,7 +225,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id18.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["data mining", "machine learning", "information technology"]
     }, {
         id: 19,
         name: "GANs in action",
@@ -218,7 +237,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id19.png",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["machine learning", "deep learning", "information technology"]
     }, {
         id: 20,
         name: "The Art of Electronics",
@@ -229,7 +249,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id20.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["electronics", "information technology"]
     }, {
         id: 21,
         name: "Java Methods for Financial Engineering",
@@ -240,7 +261,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id21.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["java", "programming", "information technology"]
     }, {
         id: 22,
         name: "Learn Java 12 Programming",
@@ -251,7 +273,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id22.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["java", "programming", "information technology"]
     }, {
         id: 23,
         name: "Libgdx Cross-platform Game Development Cookbook",
@@ -262,7 +285,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id23.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["java", "libgdx", "programming", "information technology"]
     }, {
         id: 24,
         name: "Linux Kernel Development",
@@ -273,7 +297,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id24.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["linux", "programming", "information technology"]
     }, {
         id: 25,
         name: "Mastering Machine Learning with Python in Six Steps",
@@ -284,7 +309,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id25.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["machine learning", "python", "programming", "information technology"]
     }, {
         id: 26,
         name: "Mastering Voice Interfaces",
@@ -295,7 +321,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id26.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["voice interfaces", "programming", "information technology"]
     }, {
         id: 27,
         name: "Natural Language Processing Recipes",
@@ -306,7 +333,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id27.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["natural language processing", "programming", "information technology"]
     }, {
         id: 28,
         name: "Practical Machine Learning and Image Processing",
@@ -317,7 +345,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id28.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["machine learning", "image processing", "programming", "information technology"]
     }, {
         id: 29,
         name: "Practical Machine Learning in JavaScript",
@@ -328,7 +357,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id29.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["machine learning", "javascript", "programming", "information technology"]
     }, {
         id: 30,
         name: "Professional Linux® Kernel Architecture",
@@ -339,7 +369,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id30.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["linux", "programming", "information technology"]
     }, {
         id: 31,
         name: "Python for Data Science and AI",
@@ -350,7 +381,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id31.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["python", "data science", "programming", "information technology"]
     }, {
         id: 32,
         name: "Python Machine Learning",
@@ -361,7 +393,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id32.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["python", "machine learning", "programming", "information technology"]
     }, {
         id: 33,
         name: "State-of-the-Art Deep Learning Models in TensorFlow",
@@ -372,7 +405,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id33.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["deep learning", "tensorflow", "programming", "information technology"]
     }, {
         id: 34,
         name: "Essential Math for Data Science",
@@ -383,7 +417,8 @@ const books = [
         language: "",
         coverImage: "data/book-cover/id34.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["math", "data science", "programming", "information technology"]
     }, {
         id: 35,
         name: "OpenGL 4. Shading Language. Cookbook",
@@ -394,7 +429,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id35.jpg",
         comment: null,
-        status: "shelved"
+        status: "shelved",
+        tags: ["opengl", "programming", "information technology"]
     }, {
         id: 36,
         name: "The Little Prince",
@@ -405,7 +441,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id36.jpg",
         comment: null,
-        status: "in queue"
+        status: "in queue",
+        tags: ["fiction", "novel"]
     }, {
         id: 37,
         name: "The Selfish Gene",
@@ -416,7 +453,8 @@ const books = [
         language: "Russian",
         coverImage: "data/book-cover/id37.jpg",
         comment: null,
-        status: "reading"
+        status: "reading",
+        tags: ["biology", "evolution", "science"]
     }, {
         id: 38,
         name: "Pro Python 3",
@@ -427,7 +465,8 @@ const books = [
         language: "English",
         coverImage: "data/book-cover/id38.jpg",
         comment: "If you know me well, you know that I generally like Apress books, and this one too. It is designed for intermediate developers already familiar with some Python basics as it covers more advanced topics and teaches general Python development philosophy throughout the whole book. The book also covers some exciting Python extensions besides the core Python itself.",
-        status: "have read"
+        status: "have read",
+        tags: ["python", "programming", "information technology"]
     }
 ]
 

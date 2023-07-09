@@ -2,7 +2,7 @@
 @import "@/style/theme-dark.scss";
 
 .title {
-    font-size: calc(2vw + 18px);
+    font-size: 28px;
     text-align: center;
 }
 
@@ -12,7 +12,7 @@
 
 .search-bar__input {
     max-width: 100%;
-    width: 300px;
+    width: calc(100% - 20px);
     border: 1px solid grey;
     border-radius: 12px;
     outline-color: transparent;
@@ -27,6 +27,63 @@
             outline: 1px solid #454f91;
         }
     }
+
+    @include tablet {
+        width: 460px;
+    }
+
+    @include phone {
+        width: 320px;
+    }
+}
+
+.search-filters {
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 10px;
+    width: calc(100% - 20px);
+
+    @include tablet {
+        width: 460px;
+    }
+
+    @include phone {
+        width: 320px;
+    }
+
+    &.opened {
+        background: rgb(0 0 0 / 8%);
+    }
+
+    @include dark {
+        &.opened {
+            background: #2a315e47;
+        }
+    }
+}
+
+.search-filters__filter-title:not(:first-child) {
+    margin-top: 10px;
+}
+
+.search-filters__item {
+    display: block;
+    margin: 5px;
+
+    & * {
+        font-size: 14px;
+    }
+}
+
+.search-filters__show,
+.search-filters__hide {
+    background: transparent;
+    border: none;
+    margin: auto;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--link-color);
+    display: block;
 }
 
 .book-list {
