@@ -40,6 +40,11 @@ export default class Home extends React.Component {
                                         cats
                                     </span>
                                     ,&nbsp;
+                                    <span className="clickable"
+                                          onClick={() => this.showImageInPopup("img/more_cat.jpg", "This cat's name is Chester")}>
+                                        more cats
+                                    </span>
+                                    ,&nbsp;
                                     <a className="clickable external"
                                        href="https://www.instagram.com/twinkietheparrot/"
                                        target="_blank">
