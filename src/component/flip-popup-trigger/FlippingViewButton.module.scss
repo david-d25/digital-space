@@ -1,0 +1,111 @@
+@import "@/style/common.scss";
+
+.popupWindow {
+  padding: 0;
+  margin: auto;
+  background: transparent;
+  outline: none;
+  border: none;
+  overflow: visible;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    animation: backdropFadeOut 500ms;
+  }
+
+  &.shadowBackdrop::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+    animation: backdropFadeIn 500ms;
+  }
+
+  .backdropHitBox {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  @include tablet {
+    margin: auto 20px 20px;
+  }
+
+  @include phone {
+    margin: auto 15px 15px;
+  }
+
+  .desktopReturnHint {
+    opacity: 0;
+    transition: opacity 300ms;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    position: absolute;
+    bottom: 100%;
+
+    @include tablet {
+      display: none;
+    }
+
+    @include phone {
+      display: none;
+    }
+
+    &.show {
+      opacity: 0.5;
+      animation: desktopControlsFadeIn 1000ms;
+    }
+
+    &.show.backdropHover {
+      opacity: 1;
+    }
+
+    .returnIcon {
+      fill: white;
+      width: 25px;
+      margin: 15px;
+    }
+
+    .returnHintText {
+      user-select: none;
+      color: white;
+    }
+  }
+}
+
+@keyframes desktopControlsFadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes backdropFadeIn {
+  0% {
+    background: rgba(0, 0, 0, 0);
+  }
+  50% {
+    background: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.75);
+  }
+}
+
+@keyframes backdropFadeOut {
+  0% {
+    background: rgba(0, 0, 0, 0.75);
+  }
+  50% {
+    background: rgba(0, 0, 0, 0.75);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0);
+  }
+}

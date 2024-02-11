@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: './src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         filename: '[name].js',
     },
     module: {
@@ -24,7 +24,13 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     "style-loader",
-                    "css-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            // modules: true, // todo enable after all css is turned into modules
+                            // localIdentName: '[name]__[local]' // todo add this to 'modules'
+                        }
+                    },
                     "sass-loader"
                 ]
             }, {
@@ -32,17 +38,12 @@ module.exports = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             }, {
-                test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'images/',
-                        },
-                    },
-                ],
-            },
+                test: /\.(png|jpe?g|gif|ttf|svg)$/i,
+                type: "asset/resource"
+            }, {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: "asset/resource"
+            }
         ],
     },
     plugins: [
@@ -59,7 +60,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
-            '#': path.resolve(__dirname, 'public'),
+            '@public': path.resolve(__dirname, 'public'),
         },
     },
     devServer: {

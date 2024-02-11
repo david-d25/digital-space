@@ -2,10 +2,9 @@ import React, {useState} from "react";
 
 import "./books.scss";
 
-import books from "@/data/books"
-import qs from "query-string"
-import Popup from "../../component/popup/Popup";
+import books from "@/data/books";
 import AnimateHeight from "react-animate-height";
+import FlippingViewButton from "@/component/flip-popup-trigger/FlippingViewButton";
 
 export default class Books extends React.Component {
     constructor(props) {
@@ -26,7 +25,7 @@ export default class Books extends React.Component {
             <div className="books-wr">
                 <div className="container">
                     <div className="books">
-                        <h1 className="title">My Library</h1>
+                        <h1 className="title">Library</h1>
                         <SearchBar
                             value={this.state.searchInput}
                             onInput={e => this.onSearch(e.target.value)}
@@ -41,11 +40,6 @@ export default class Books extends React.Component {
                             searchFilter={this.state.searchInput}
                             onBookClick={this.openBookPopup}
                         />
-                        <BookDetailsPopup
-                            book={this.state.popupBook}
-                            active={this.state.popupActive}
-                            onCloseClick={this.closePopup}
-                        />
                     </div>
                 </div>
             </div>
@@ -53,9 +47,10 @@ export default class Books extends React.Component {
     }
 
     componentDidMount() {
-        const urlParams = qs.parse(window.location.search);
-        const searchQueryParam = urlParams.q;
-        const bookIdQueryParam = urlParams.bookId;
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQueryParam = urlParams.get('q');
+        const bookIdQueryParam = urlParams.get('bookId');
+
         if (searchQueryParam) {
             this.setState({
                 searchInput: decodeURIComponent(searchQueryParam)
@@ -112,69 +107,12 @@ export default class Books extends React.Component {
     }
 }
 
-function BookDetailsPopup(props) {
-    const { active, book, onCloseClick } = props
-    return (
-        <Popup active={active} onCloseClick={onCloseClick}>
-            { book ? (
-                <div className="book-popup">
-                    <div className="book-popup__title">
-                        {book.name} ({book.year})
-                        {book.edition && <div className="book-popup__edition">{book.edition}</div>}
-                    </div>
-                    <div className="book-popup__media">
-                        <img className="book-popup__book-cover" src={book.coverImage} alt={book.name}></img>
-                    </div>
-                    <div className="book-popup__info">
-                        <div className="book-popup__block">
-                            <div className="book-popup__label">Status</div>
-                            { book.status === "have read" && (
-                                <div className="book-popup__status green">Have read</div>
-                            ) || book.status === "reading" && (
-                                <div className="book-popup__status blue">Reading currently</div>
-                            ) || (
-                                <div className="book-popup__status">{book.status}</div>
-                            )}
-                        </div>
-                        { book.comment &&
-                            <div className="book-popup__block book-popup__comment-block">
-                                <div className="book-popup__label">David's thoughts</div>
-                                <div className="book-popup__comment">
-                                    {book.comment}
-                                </div>
-                            </div>
-                        }
-                        <div className="book-popup__block">
-                            <div className="book-popup__label">Authors</div>
-                            <div className="book-popup__authors">
-                                {book.authors.map(a => <div className="book-popup__author" key={a}>{a}</div>)}
-                            </div>
-                        </div>
-                        <div className="book-popup__block">
-                            <div className="book-popup__label"></div>
-                            <div className="book-popup__language">This book is in {book.language}</div>
-                        </div>
-                        <div className="book-popup__block">
-                            {book.isbn && <div className="book-popup__isbn">ISBN {book.isbn}</div>}
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <div className="book-popup">
-                    <div className="book-popup__centered-message">
-                        Book not found :(
-                    </div>
-                </div>
-            )}
-        </Popup>
-    );
-}
-
 function SearchBar(props) {
     return (
         <div className="search-bar">
             <input  className="search-bar__input"
                     placeholder="Search"
+                    name="search"
                     value={props.value}
                     onInput={e => props.onInput(e)}
             />
@@ -249,9 +187,7 @@ function BookList(props) {
     const filteredBooks = filterBooks(props.books, props.searchFilter, props.filters);
     return (
         <div className="book-list">
-            {filteredBooks.map(book =>
-                <BookCard book={book} key={book.id} onClick={() => props.onBookClick(book)}/>
-            )}
+            {filteredBooks.map(book => <BookCard book={book} key={book.id}/>)}
             {!filteredBooks.length && <div className=".book-list__no-results">No results</div>}
         </div>
     )
@@ -259,27 +195,84 @@ function BookList(props) {
 
 function BookCard(props) {
     const book = props.book;
+    const [open, setOpen] = useState(false);
+    const details = <BookDetails book={book}/>;
     return (
-        <div className="book-item" onClick={props.onClick}>
-            {/*{ book.status &&*/}
-            {/*    <div className={`book-item__status ${book.status === 'have read' && 'green'} ${book.status === 'reading' && 'blue'}`}>*/}
-            {/*        {book.status}*/}
-            {/*    </div>*/}
-            {/*}*/}
-            <div className="book-item__img-wr">
-                <img className="book-item__img" src={book.coverImage} alt={book.name}/>
-            </div>
-            <div className="book-item-info">
-                <div className="book-item-info__title">
-                    {book.name}
+        <FlippingViewButton open={open} onClose={() => setOpen(false)} popupContent={details}>
+            <div className="book-item" onClick={() => setOpen(true)}>
+                <div className="book-item__img-wr">
+                    <img className="book-item__img" src={book.coverImage} alt={book.name}/>
                 </div>
-                {book.edition && <div className="book-item-info__edition">, {book.edition}</div>}
-                <div className="book-item-info__author-list">
-                    {book.authors.map(author => <div className="book-item-info__author" key={author}>{author}</div>)}
+                <div className="book-item-info">
+                    <div className="book-item-info__title">
+                        {book.name}
+                    </div>
+                    {book.edition && <div className="book-item-info__edition">, {book.edition}</div>}
+                    <div className="book-item-info__author-list">
+                        {book.authors.map(author => <div className="book-item-info__author" key={author}>{author}</div>)}
+                    </div>
                 </div>
             </div>
-        </div>
+        </FlippingViewButton>
     );
+}
+
+function BookDetails(props) {
+    const { book } = props
+    if (book) {
+        return (
+            <div className="book-popup">
+                <div className="book-popup__title">
+                    {book.name} ({book.year})
+                    {book.edition && <div className="book-popup__edition">{book.edition}</div>}
+                </div>
+                <div className="book-popup__media">
+                    <img className="book-popup__book-cover" src={book.coverImage} alt={book.name}></img>
+                </div>
+                <div className="book-popup__info">
+                    <div className="book-popup__block">
+                        <div className="book-popup__label">Status</div>
+                        { book.status === "have read" && (
+                            <div className="book-popup__status green">Have read</div>
+                        ) || book.status === "reading" && (
+                            <div className="book-popup__status blue">Reading currently</div>
+                        ) || (
+                            <div className="book-popup__status">{book.status}</div>
+                        )}
+                    </div>
+                    { book.comment &&
+                        <div className="book-popup__block book-popup__comment-block">
+                            <div className="book-popup__label">Comment</div>
+                            <div className="book-popup__comment">
+                                {book.comment}
+                            </div>
+                        </div>
+                    }
+                    <div className="book-popup__block">
+                        <div className="book-popup__label">Authors</div>
+                        <div className="book-popup__authors">
+                            {book.authors.map(a => <div className="book-popup__author" key={a}>{a}</div>)}
+                        </div>
+                    </div>
+                    <div className="book-popup__block">
+                        <div className="book-popup__label"></div>
+                        <div className="book-popup__language">This book is in {book.language}</div>
+                    </div>
+                    <div className="book-popup__block">
+                        {book.isbn && <div className="book-popup__isbn">ISBN {book.isbn}</div>}
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="book-popup">
+                <div className="book-popup__centered-message">
+                    Book not found :(
+                </div>
+            </div>
+        );
+    }
 }
 
 function filterBooks(books, query, filters) {

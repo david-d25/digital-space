@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./home.scss";
 import Popup from "../../component/popup/Popup";
-import avatar from "#/img/avatar.jpg";
+import avatar from "@public/img/avatar.jpg";
 
 export default class Home extends React.Component {
     constructor(props) {
