@@ -143,6 +143,13 @@ function FlipPopup(props) {
     const ref = useRef();
     const [backdropHover, setBackdropHover] = useState(false);
 
+    const [isInClosingGesture, setIsInClosingGesture] = useState(false);
+    const [closingGestureTranslatePx, setClosingGestureTranslatePx] = useState(0);
+    const [closingGestureDragStart, setClosingGestureDragStart] = useState(0);
+    const [closingGestureDragEnd, setClosingGestureDragEnd] = useState(0);
+
+    const animateLastUpdateRef = useRef(0);
+
     useEffect(() => {
         if (!ref.current)
             return;
@@ -177,7 +184,7 @@ function FlipPopup(props) {
         const initialScale = flippingElementBounds.height/ref.current.offsetHeight;
 
         const tx = (1 - flipFactor) * offset[0];
-        const ty = (1 - flipFactor) * offset[1];
+        const ty = (1 - flipFactor) * offset[1] + closingGestureTranslatePx;
         const angle = - (1 - flipFactor) * Math.PI;
         const scale = lerp(initialScale, 1, flipFactor);
         if (flipFactor < 0.5) {
@@ -187,6 +194,8 @@ function FlipPopup(props) {
             style.transform = `translate3d(${tx}px, ${ty}px, 0px) scale(${scale}) perspective(1500px) rotateY(${angle}rad)`;
             style.visibility = null;
         }
+    } else if (flipFactor === 1) {
+        style.transform = `translate3d(0px, ${closingGestureTranslatePx}px, 0px)`;
     }
 
     function requestClose(e) {
@@ -195,17 +204,56 @@ function FlipPopup(props) {
     }
 
     function onTouchStart(e) {
-        console.log('drag start');
+        if (ref.current && ref.current.scrollTop == 0 && !isInClosingGesture && e.touches.length === 1) {
+            setIsInClosingGesture(true);
+            setClosingGestureDragStart(e.touches[0].clientY);
+            setClosingGestureDragEnd(e.touches[0].clientY);
+        }
     }
 
     function onTouchMove(e) {
-        console.log('drag', e);
+        if (!isInClosingGesture || flipFactor !== 1)
+            return;
+        setClosingGestureDragEnd(e.touches[0].clientY);
+        let translateY = closingGestureDistanceFunction(closingGestureDragEnd - closingGestureDragStart);
+        if (translateY < 0)
+            translateY = 0;
+        setClosingGestureTranslatePx(translateY);
     }
 
     function onTouchEnd(e) {
-        console.log('drag end');
+        setIsInClosingGesture(false);
+        animateLastUpdateRef.current = 0;
+        if (Math.abs(closingGestureTranslatePx) > getClosingGestureDistanceThreshold()) {
+            requestClose(e);
+        }
     }
 
+    function closingGestureDistanceFunction(x) {
+        const asymptote = 75;
+        return 2 * asymptote / (1 + Math.exp(-x / asymptote)) - asymptote;
+    }
+
+    function animate(time) {
+        if (isInClosingGesture || !animateLastUpdateRef.current) {
+            animateLastUpdateRef.current = time;
+            return;
+        }
+        const delta = time - animateLastUpdateRef.current;
+        const speed = 0.02;
+        const diff = -closingGestureTranslatePx * delta * speed;
+        setClosingGestureTranslatePx(v => Math.abs(v) > 1 ? v + diff : 0);
+        animateLastUpdateRef.current = time;
+    }
+
+    function getClosingGestureDistanceThreshold() {
+        return 40;
+    }
+
+    if (closingGestureTranslatePx !== 0) {
+        requestAnimationFrame(animate);
+    }
+    
     return (
         <dialog
             autoFocus={true}
@@ -218,6 +266,9 @@ function FlipPopup(props) {
             <div className={`${styles.desktopReturnHint} ${open ? styles.show : ''} ${backdropHover ? styles.backdropHover : ''}`}>
                 <img className={styles.returnIcon} src={returnIcon} alt="Return icon"/>
                 <div className={styles.returnHintText}>Return</div>
+            </div>
+            <div className={`${styles.touchReturnHint} ${open ? styles.show : ""}`}>
+                <div className={styles.dragBar}></div>
             </div>
             <div className={styles.backdropHitBox}
                  onClick={requestClose}

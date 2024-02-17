@@ -7,6 +7,8 @@
   outline: none;
   border: none;
   overflow: visible;
+  max-width: none;
+  max-height: none;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0);
@@ -32,7 +34,10 @@
   }
 
   @include phone {
-    margin: auto 15px 15px;
+    overflow: auto;
+    margin: 0;
+    padding-top: 50vh;
+    height: 100dvh;
   }
 
   .desktopReturnHint {
@@ -71,6 +76,56 @@
       user-select: none;
       color: white;
     }
+  }
+
+  .touchReturnHint {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    
+    @include tablet {
+      &.show {
+        display: inherit;
+      }
+    }
+
+    @include phone {
+      &.show {
+        display: inherit;
+      }
+    }
+
+    .dragBar {
+      width: 150px;
+      position: absolute;
+      top: calc(50vh - 20px);
+      height: 10px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 99999px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      animation: dragBarFadeIn 1000ms;
+
+      @include tablet {
+        top: -20px;
+      }
+    }
+  }
+}
+
+@keyframes dragBarFadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
