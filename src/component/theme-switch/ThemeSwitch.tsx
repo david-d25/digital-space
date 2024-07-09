@@ -29,6 +29,8 @@ class ThemeSwitch extends React.Component<any, any> {
             <div className="c-theme-switch">
                 <div className={"body " + this.props.theme}
                      role="button"
+                     tabIndex={0}
+                     onKeyDown={e => e.key === "Enter" && this.switchTheme()}
                      onClick={() => this.switchTheme()}>
                     <div className="icon dark">🌙</div>
                     <div className="icon light">☀️</div>

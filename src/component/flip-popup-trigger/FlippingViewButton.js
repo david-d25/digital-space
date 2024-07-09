@@ -109,7 +109,8 @@ function FlippingElement(props) {
         const triggerCenter = [restingBounds.left + restingBounds.width/2, restingBounds.top + restingBounds.height/2];
         const offset = [pageCenter[0] - triggerCenter[0], pageCenter[1] - triggerCenter[1]];
         const triggerHeight = ref.current.offsetHeight;
-        const targetTriggerScale = popupBounds.height/triggerHeight;
+        const triggerWidth = ref.current.offsetWidth;
+        const targetTriggerScale = Math.min(popupBounds.height/triggerHeight, popupBounds.width/triggerWidth);
 
         const tx = flipFactor * offset[0];
         const ty = flipFactor * offset[1];

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import "./books.scss";
 
@@ -18,6 +18,7 @@ export default class Books extends React.Component {
                 hideGeekyItBooks: true
             }
         }
+        this.handlePopState = this.handlePopState.bind(this);
     }
 
     render() {
@@ -38,7 +39,9 @@ export default class Books extends React.Component {
                             books={books}
                             filters={this.state.filters}
                             searchFilter={this.state.searchInput}
+                            popupBookId={this.state.popupBook?.id}
                             onBookClick={this.openBookPopup}
+                            onPopupClose={this.closePopup}
                         />
                     </div>
                 </div>
@@ -58,9 +61,14 @@ export default class Books extends React.Component {
         }
         if (bookIdQueryParam) {
             const book = books.find(b => b.id.toString() === bookIdQueryParam);
-            this.openBookPopup(book);
+            setTimeout(() => this.openBookPopup(book), 0);
         }
         this.updateTitle();
+        window.addEventListener('popstate', this.handlePopState);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('popstate', this.handlePopState);
     }
 
     onSearch = (query) => {
@@ -70,20 +78,41 @@ export default class Books extends React.Component {
     }
 
     openBookPopup = (book) => {
+        if (!book) {
+            this.setState({
+                popupActive: false,
+                popupBook: null
+            });
+            return;
+        }
         this.setState({
             popupActive: true,
             popupBook: book
         });
+        // todo if book is not found
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('bookId') !== book.id.toString()) {
+            url.searchParams.set('bookId', book.id);
+            window.history.pushState({ openedBookId: book.id }, '', url);
+        }
     }
 
     closePopup = () => {
+        const currentState = window.history.state;
+        const url = new URL(window.location.href);
+        if (currentState && currentState.openedBookId === this.state.popupBook?.id) {
+            window.history.back();
+        } else {
+            url.searchParams.delete('bookId');
+            window.history.replaceState(null, null, url);
+        }
         this.setState({
-            popupActive: false
+            popupActive: false,
+            popupBook: null
         });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.updateUrl();
         this.updateTitle();
     }
 
@@ -95,21 +124,28 @@ export default class Books extends React.Component {
         document.title = title;
     }
 
-    updateUrl() {
+    handlePopState() {
         const url = new URL(window.location.href);
-        url.searchParams.delete('q');
-        url.searchParams.delete('bookId');
-        if (this.state.searchInput)
-            url.searchParams.set('q', this.state.searchInput);
-        if (this.state.popupActive && this.state.popupBook)
-            url.searchParams.set('bookId', this.state.popupBook.id);
-        window.history.replaceState(null, null, url);
+        const bookId = url.searchParams.get('bookId');
+        if (!bookId) {
+            this.setState({
+                popupActive: false,
+                popupBook: null
+            });
+        } else {
+            const book = books.find(b => b.id.toString() === bookId);
+            this.openBookPopup(book);
+        }
     }
 }
 
 function SearchBar(props) {
     return (
         <div className="search-bar">
+            <svg className="search-bar__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <circle cx="40" cy="40" r="25" strokeWidth="8" fill="none" />
+                <line x1="60" y1="60" x2="85" y2="85" strokeWidth="8" strokeLinecap="round" />
+            </svg>
             <input  className="search-bar__input"
                     placeholder="Search"
                     name="search"
@@ -184,22 +220,28 @@ function SearchFilters(props) {
 }
 
 function BookList(props) {
-    const filteredBooks = filterBooks(props.books, props.searchFilter, props.filters);
+    const { popupBookId, onBookClick, onPopupClose } = props;
+    const filteredBooks = filterBooks(props.books, props.searchFilter, props.filters, popupBookId);
     return (
         <div className="book-list">
-            {filteredBooks.map(book => <BookCard book={book} key={book.id}/>)}
+            {filteredBooks.map(book =>
+                <BookCard book={book}
+                          key={book.id}
+                          open={popupBookId === book.id}
+                          onOpen={() => onBookClick(book)}
+                          onClose={() => onPopupClose()}/>
+            )}
             {!filteredBooks.length && <div className=".book-list__no-results">No results</div>}
         </div>
     )
 }
 
 function BookCard(props) {
-    const book = props.book;
-    const [open, setOpen] = useState(false);
+    const { book, open, onOpen, onClose } = props;
     const details = <BookDetails book={book}/>;
     return (
-        <FlippingViewButton open={open} onClose={() => setOpen(false)} popupContent={details}>
-            <div className="book-item" onClick={() => setOpen(true)}>
+        <FlippingViewButton open={open} onClose={() => onClose()} popupContent={details}>
+            <div className="book-item" tabIndex={0} onClick={() => onOpen()} onKeyDown={e => e.key === "Enter" && onOpen()}>
                 <div className="book-item__img-wr">
                     <img className="book-item__img" src={book.coverImage} alt={book.name}/>
                 </div>
@@ -275,11 +317,11 @@ function BookDetails(props) {
     }
 }
 
-function filterBooks(books, query, filters) {
-    return books.filter(b => bookFilter(b, query, filters));
+function filterBooks(books, query, filters, openedBookId) {
+    return books.filter(b => bookFilter(b, query, filters, openedBookId));
 }
 
-function bookFilter(book, query, filters) {
+function bookFilter(book, query, filters, openedBookId) {
     const passedSearch = (
         !query ||
         book.name && book.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -293,5 +335,6 @@ function bookFilter(book, query, filters) {
         !filters.hideGeekyItBooks ||
         !book.tags.includes('information technology')
     );
-    return passedSearch && passedFilters;
+    const passedOpenedBook = openedBookId === book.id;
+    return passedSearch && passedFilters || passedOpenedBook;
 }

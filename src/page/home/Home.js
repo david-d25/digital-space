@@ -31,16 +31,22 @@ export default class Home extends React.Component {
                                 <div className="bio">I'm David, a Java & Web developer.</div>
                                 <div className="bio">I like&nbsp;
                                     <span className="clickable"
+                                          tabIndex={0}
+                                          onKeyDown={e => e.key === "Enter" && this.showImageInPopup("img/parrot.jpg", "A parrot")}
                                           onClick={() => this.showImageInPopup("img/eagle_owl.jpg", "Yoll the Eagle-Owl!")}>
                                         owls
                                     </span>
                                     ,&nbsp;
                                     <span className="clickable"
+                                          tabIndex={0}
+                                          onKeyDown={e => e.key === "Enter" && this.showImageInPopup("img/cat.jpg", "This cat's name is Hina")}
                                           onClick={() => this.showImageInPopup("img/cat.jpg", "This cat's name is Hina")}>
                                         cats
                                     </span>
                                     ,&nbsp;
                                     <span className="clickable"
+                                          tabIndex={0}
+                                          onKeyDown={e => e.key === "Enter" && this.showImageInPopup("img/more_cat.jpg", "This cat's name is Chester")}
                                           onClick={() => this.showImageInPopup("img/more_cat.jpg", "This cat's name is Chester")}>
                                         more cats
                                     </span>
@@ -153,6 +159,8 @@ class CoolClickEffect extends React.Component {
     }
 
     animate(timestamp) {
+        if (this.el == null)
+            return;
         if (this.previousAnimationTimestamp === null)
             this.previousAnimationTimestamp = timestamp;
         let delta = timestamp - this.previousAnimationTimestamp;
@@ -166,6 +174,8 @@ class CoolClickEffect extends React.Component {
     }
 
     applyTransform() {
+        if (this.el == null)
+            return;
         let rect = this.el.getBoundingClientRect();
         let { rotationY, rotationX, scale } = this.coolEffects;
         this.el.style.transform = ` perspective(800px)
