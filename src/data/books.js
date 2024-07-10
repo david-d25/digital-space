@@ -443,6 +443,18 @@ const books = [
         comment: "One of the books I would recommend everyone to read. «Science. It works... bitches!» ©",
         status: "have read",
         tags: ["biology", "evolution", "science"]
+    }, {
+        id: 40,
+        name: "The Extended Phenotype",
+        edition: null,
+        authors: ["Richard Dawkins"],
+        year: 2014,
+        isbn: "9785457609204",
+        language: "Russian",
+        coverImage: "data/book-cover/id40.jpg",
+        comment: "The book is definitely worth reading. It's a good continuation of the ideas from the previous book. Though keep in mind that, unlike The Selfish Gene, the author devotes a lot of time to correspondence discussions with other scientists. As a result, this book is more academic than popular science.",
+        status: "have read",
+        tags: ["biology", "evolution", "science"]
     }
 ];
 

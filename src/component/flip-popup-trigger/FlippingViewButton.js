@@ -205,7 +205,7 @@ function FlipPopup(props) {
     }
 
     function onTouchStart(e) {
-        if (ref.current && ref.current.scrollTop == 0 && !isInClosingGesture && e.touches.length === 1) {
+        if (ref.current && ref.current.scrollTop === 0 && !isInClosingGesture && e.touches.length === 1) {
             setIsInClosingGesture(true);
             setClosingGestureDragStart(e.touches[0].clientY);
             setClosingGestureDragEnd(e.touches[0].clientY);

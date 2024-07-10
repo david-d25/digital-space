@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./home.scss";
 import Popup from "../../component/popup/Popup";
 import avatar from "@public/img/avatar.jpg";
+import FloatyCard from "@/component/floaty-card/FloatyCard";
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -136,7 +137,7 @@ class CoolClickEffect extends React.Component {
             </div>
         )
     }
-    
+
     effectPress(event) {
         if (event.target.tagName === "A")
             return;
@@ -164,6 +165,8 @@ class CoolClickEffect extends React.Component {
         if (this.previousAnimationTimestamp === null)
             this.previousAnimationTimestamp = timestamp;
         let delta = timestamp - this.previousAnimationTimestamp;
+        if (delta > 100)
+            delta = 100;
         this.applyTransform();
         this.coolEffects.scale -= (this.coolEffects.scale*0.001 + 0.002)*delta;
         if (this.coolEffects.scale > 0)
