@@ -1,3 +1,11 @@
+$tablet-width: 768px;
+$phone-width: 480px;
+
+:root {
+  --tablet-width: #{$tablet-width};
+  --phone-width: #{$phone-width};
+}
+
 * {
   box-sizing: border-box;
   color: var(--text-color);
@@ -34,22 +42,14 @@ html, body {
   visibility: hidden;
 }
 
-@font-face {
-  font-family: impact;
-  src: url("../../../public/font/impact.ttf");
-}
-
-$tablet-width: 768px;
-$phone-width: 480px;
-
 @mixin tablet {
-  @media (max-width: #{$tablet-width - 1px}) {
+  @media (min-width: $phone-width + 1) and (max-width: $tablet-width) {
     @content;
   }
 }
 
 @mixin phone {
-  @media (max-width: #{$phone-width - 1px}) {
+  @media (max-width: #{$phone-width}) {
     @content;
   }
 }

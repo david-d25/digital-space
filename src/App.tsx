@@ -14,6 +14,7 @@ import {RecoilRoot} from "recoil";
 
 import "@/style/theme-light.scss";
 import "@/style/theme-dark.scss";
+import "@/style/fonts.scss";
 
 import './App.scss';
 

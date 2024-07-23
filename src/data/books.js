@@ -20,7 +20,7 @@ const books = [
         isbn: "978-5-91671-947-5",
         language: "Russian",
         coverImage: "data/book-cover/id1.jpg",
-        comment: "This book explains why some stories are more interesting than others, how it is connected with the survival of ancient people and how companies use it to create product ecosystems in the modern post-advertising world. Very easy and fun to read, I recommend it.",
+        comment: "This book explains why some stories are more interesting than others, how it is connected with the survival of ancient people and how companies use it to create product ecosystems in the modern post-advertising world. Very easy and fun to read.",
         status: "have read",
         tags: ["storytelling", "marketing", "business", "product"]
     }, {
@@ -191,18 +191,6 @@ const books = [
         comment: null,
         status: "have read",
         tags: ["low-level programming", "programming", "c language", "assembly", "information technology"]
-    }, {
-        id: 16,
-        name: "Getting Started with Hazelcast",
-        edition: null,
-        authors: ["Mat Johns"],
-        year: 2013,
-        isbn: "978-1-78216-730-3",
-        language: "English",
-        coverImage: "data/book-cover/id16.jpg",
-        comment: null,
-        status: "have read",
-        tags: ["hazelcast", "java", "programming", "information technology"]
     }, {
         id: 17,
         name: "C++ in One Hour a Day",
@@ -436,12 +424,12 @@ const books = [
         name: "The Little Prince",
         edition: null,
         authors: ["Antoine de Saint-Exupéry"],
-        year: 2019,
-        isbn: "9781405216340",
-        language: "English",
-        coverImage: "data/book-cover/id36.jpg",
+        year: 2015,
+        isbn: "9783730602294",
+        language: "German",
+        coverImage: "data/book-cover/id36.webp",
         comment: null,
-        status: "in queue",
+        status: "have read",
         tags: ["fiction", "novel"]
     }, {
         id: 37,
@@ -452,22 +440,22 @@ const books = [
         isbn: "978-5-17-077772-3",
         language: "Russian",
         coverImage: "data/book-cover/id37.jpg",
-        comment: null,
-        status: "reading",
+        comment: "One of the books I would recommend everyone to read. «Science. It works... bitches!» ©",
+        status: "have read",
         tags: ["biology", "evolution", "science"]
     }, {
-        id: 38,
-        name: "Pro Python 3",
-        edition: "3rd edition",
-        authors: ["J. Burton Browning", "Marty Alchin"],
-        year: 2019,
-        isbn: "978-1-4842-4385-5",
-        language: "English",
-        coverImage: "data/book-cover/id38.jpg",
-        comment: "If you know me well, you know that I generally like Apress books, and this one too. It is designed for intermediate developers already familiar with some Python basics as it covers more advanced topics and teaches general Python development philosophy throughout the whole book. The book also covers some exciting Python extensions besides the core Python itself.",
+        id: 40,
+        name: "The Extended Phenotype",
+        edition: null,
+        authors: ["Richard Dawkins"],
+        year: 2014,
+        isbn: "9785457609204",
+        language: "Russian",
+        coverImage: "data/book-cover/id40.jpg",
+        comment: "The book is definitely worth reading. It's a good continuation of the ideas from the previous book. Though keep in mind that, unlike The Selfish Gene, the author devotes a lot of time to correspondence discussions with other scientists. As a result, this book is more academic than popular science.",
         status: "have read",
-        tags: ["python", "programming", "information technology"]
+        tags: ["biology", "evolution", "science"]
     }
-]
+];
 
 export default books;
