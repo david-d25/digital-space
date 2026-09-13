@@ -1,0 +1,70 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 100px;
+  background: var(--tint);
+  color: inherit;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    background: var(--tint-strong);
+  }
+}
+
+/* Secondary actions sit on the panel itself until hovered. */
+.quiet {
+  background: transparent;
+  color: var(--ink-soft);
+
+  &:hover {
+    background: var(--tint);
+    color: var(--ink);
+  }
+}
+
+.label {
+  flex: none;
+}
+
+/* Keeps the value and its marker together against the right edge. */
+.end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.icon {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--ink-soft);
+}
+
+/*
+ * A long address would otherwise wrap and make its pill taller than the rest
+ * of the stack. Ellipsis is the fallback for widths where even one line of it
+ * cannot fit.
+ */
+.value {
+  min-width: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

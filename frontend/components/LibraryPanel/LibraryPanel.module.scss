@@ -1,0 +1,120 @@
+/*
+ * The column count, written out rather than left to `auto-fit`.
+ *
+ * `repeat(auto-fit, minmax(104px, 1fr))` picks the count itself, which is
+ * convenient right up until something else needs to know it — and the shelf
+ * does: the upper grid has to hold exactly one row, so it has to show exactly
+ * as many books as there are columns. These thresholds are the same arithmetic
+ * `auto-fit` does (n columns once the width reaches n * 104px plus the gaps),
+ * so the covers come out the size they always were.
+ *
+ * Six is the last step. Wider than that the shelf simply gets roomier covers,
+ * which is as wide as it ever goes beside the intro panel.
+ */
+$columns: (3: 338px, 4: 455px, 5: 572px, 6: 689px);
+
+.library {
+  /* Shared by both grids, and by the gap that folds with the lower one. */
+  --shelf-gap: clamp(10px, 1.2vw, 16px);
+
+  transition: padding-bottom 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .library {
+    transition: none;
+  }
+}
+
+/*
+ * The queries below are asked of this box, not of the window, so the shelf
+ * reflows to its own width — which is what changes when the intro panel is
+ * beside it.
+ */
+.shelfArea {
+  container-type: inline-size;
+  container-name: shelf;
+  margin-top: 20px;
+}
+
+.shelf {
+  --shelf-columns: 2;
+
+  display: grid;
+  grid-template-columns: repeat(var(--shelf-columns), minmax(0, 1fr));
+  gap: var(--shelf-gap);
+  align-items: start;
+}
+
+/*
+ * Which books each grid shows.
+ *
+ * The upper grid carries the first six and shows as many as fit on one row;
+ * the lower carries everything from the third book on and hides the ones the
+ * upper is already showing. Every book is therefore displayed exactly once,
+ * whatever the column count, and the two grids meet on a row boundary.
+ *
+ * The rules only ever widen: each step shows one more above and hides one more
+ * below, so a wider container adds to what the narrower ones established.
+ */
+.preview > * {
+  display: none;
+}
+
+.preview > :nth-child(-n + 2) {
+  display: flex;
+}
+
+@each $count, $width in $columns {
+  @container shelf (min-width: #{$width}) {
+    .shelf {
+      --shelf-columns: #{$count};
+    }
+
+    .preview > :nth-child(-n + #{$count}) {
+      display: flex;
+    }
+
+    .rest > :nth-child(-n + #{$count - 2}) {
+      display: none;
+    }
+  }
+}
+
+/*
+ * The rest of the shelf. `0fr -> 1fr` animates to a height nobody measured,
+ * and since the grid inside keeps its natural size and is clipped, opening it
+ * re-lays out this box and what follows it — not the covers.
+ *
+ * Closing is the first beat of the transition: the shelf shrinks, and the work
+ * panel then comes back into the space. Opening is the second beat, once that
+ * space has been given up — hence the delay on one direction only.
+ */
+.extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows
+    var(--fold-duration, 360ms)
+    var(--fold-ease, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.extra[data-open='true'] {
+  grid-template-rows: 1fr;
+  /* Zero unless the layout is wide enough to want two beats. */
+  transition-delay: var(--fold-stagger, 0ms);
+}
+
+.extraInner {
+  /* Grid items refuse to shrink below their content without this. */
+  min-height: 0;
+  overflow: clip;
+
+  /* The row gap between the two grids, folded away with the lower one. */
+  padding-top: var(--shelf-gap);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .extra {
+    transition: none;
+  }
+}

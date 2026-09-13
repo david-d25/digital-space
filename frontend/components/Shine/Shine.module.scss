@@ -1,0 +1,12 @@
+/*
+ * The overlay is absolutely positioned against this box.
+ *
+ * Deliberately not an isolation group. Isolating would cut whatever the
+ * targets are painted on out of the backdrop, leaving the blend modes to
+ * composite against nothing but the targets' own translucency. The canvas
+ * writes zero alpha everywhere outside them, so letting it blend all the way
+ * down costs nothing.
+ */
+.scope {
+  position: relative;
+}

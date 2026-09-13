@@ -1,0 +1,60 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.large {
+  min-height: clamp(180px, 20vw, 240px);
+}
+
+/* Says where the card goes, in the corner the eyebrow tag used to occupy. */
+.source {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+/* Pushed to the bottom so cards of different heights line up on their titles. */
+.title {
+  margin-top: auto;
+  font-size: clamp(21px, 2.1vw, 26px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.large .title {
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.large .description {
+  margin-top: 10px;
+  max-width: 38ch;
+  font-size: clamp(15px, 1.4vw, 17px);
+}

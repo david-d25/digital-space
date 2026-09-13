@@ -1,0 +1,32 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  &:hover {
+    opacity: 0.82;
+  }
+}
+
+/* `next/image` with `fill` positions itself against this box. */
+.coverBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--tint);
+  box-shadow: 0 8px 20px oklch(21% 0.014 265 / 22%);
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}

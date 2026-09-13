@@ -1,0 +1,143 @@
+.content {
+  /* The space between stacked panels. A variable because the folding box has
+   * to cancel one of these gaps as it closes. */
+  --stack-gap: clamp(12px, 1.4vw, 18px);
+
+  /*
+   * The transition between the two states, in two beats: whatever is
+   * leaving goes first, and what is arriving follows once there is room.
+   *
+   * Run together they read as a rhythm problem. The work panel sits above
+   * the shelf, so folding it drags the shelf up by about its own height at
+   * the same moment the shelf is growing down by rather more - two moves
+   * of different sizes, in opposite directions, on the same box. The curve
+   * is the same for both; it still looks out of step.
+   *
+   * Stacked, though, the two beats have to run together — see below.
+   * `LibraryPanel` and its scroll both read these.
+   */
+  --fold-duration: 360ms;
+  --fold-stagger: 0ms;
+  --fold-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--stack-gap);
+  box-sizing: border-box;
+  padding: clamp(14px, 2.2vw, 28px) clamp(14px, 2.2vw, 28px) clamp(28px, 6vw, 72px);
+}
+
+/*
+ * The two beats, but only where there is room for them.
+ *
+ * Staggering leaves the page briefly shorter than it was and than it will be:
+ * the work panel has gone and the shelf has not arrived. Stacked, the shelf is
+ * the bottom of the page and the reader is standing on it, so that trough is
+ * a scroll the browser has to clamp — and then undo a beat later. Two forced
+ * jumps, which is worse than the overlap the stagger was there to fix.
+ *
+ * Side by side the column is shorter, the intro panel is beside it rather than
+ * above, and the bottom of the page is rarely where anyone is standing.
+ */
+@media (min-width: 865px) {
+  .content {
+    --fold-stagger: 200ms;
+  }
+}
+
+/*
+ * `flex: 1000` makes the leftover width go to this column, so the intro panel
+ * keeps its own and the rest of the page fills whatever is left.
+ */
+.main {
+  flex: 1000 1 460px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+}
+
+/*
+ * The work panel's box, which folds away when the shelf opens.
+ *
+ * `grid-template-rows: 1fr -> 0fr` animates to and from a height nobody has
+ * measured: `fr` interpolates, and the row carries whatever the content
+ * happens to be. Nothing inside is re-laid out on the way — the panel keeps
+ * its natural size and is clipped.
+ *
+ * `overflow-anchor: none` is the important line. Folding a box above the
+ * reader would drag the page up under them, and what prevents that is the
+ * browser's scroll anchoring — but only if it holds on to something that is
+ * staying put. This keeps it from choosing a node inside the box that is on
+ * its way out, so it anchors to the shelf below instead.
+ */
+.workSlot {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow-anchor: none;
+
+  /* Second beat on the way back: the shelf closes, then this reappears. */
+  transition:
+    grid-template-rows var(--fold-duration) var(--fold-ease) var(--fold-stagger),
+    margin-bottom var(--fold-duration) var(--fold-ease) var(--fold-stagger);
+}
+
+/* First beat on the way out: this leaves, and the shelf follows it. */
+.workSlot[data-collapsed='true'] {
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows var(--fold-duration) var(--fold-ease),
+    margin-bottom var(--fold-duration) var(--fold-ease);
+
+  /* Cancels the column's gap, so the space the panel occupied closes
+   * completely instead of leaving a strip of nothing behind. */
+  margin-bottom: calc(-1 * var(--stack-gap));
+}
+
+.workInner {
+  /* Grid items refuse to shrink below their content without this. */
+  min-height: 0;
+
+  /*
+   * Not clipped at rest: the panel's shadow is painted outside its border box
+   * and a clip would square it off. It is clipped for the whole of the fold
+   * instead — on the way down from the first frame, and on the way up until
+   * the box has finished growing, which is what the delay is for. Without it
+   * the panel would spill out of a box that is still catching up.
+   */
+  overflow: visible;
+
+  /* Opening: after the box has waited its turn and grown. */
+  transition:
+    opacity 240ms var(--fold-ease) calc(var(--fold-stagger) + 120ms),
+    overflow 1ms allow-discrete calc(var(--fold-stagger) + var(--fold-duration));
+}
+
+/* Closing: gone quickly, which also hides the clip eating the panel. */
+[data-collapsed='true'] > .workInner {
+  opacity: 0;
+  overflow: clip;
+  transition:
+    opacity 160ms var(--fold-ease),
+    overflow 1ms allow-discrete;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 4px 10px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workSlot,
+  .workInner,
+  [data-collapsed='true'] > .workInner {
+    transition: none;
+  }
+}

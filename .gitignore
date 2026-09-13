@@ -1,17 +1,17 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.gradle
+**/build/
+!src/**/build/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+**/.next
 
-# testing
-/coverage
+!gradle-wrapper.jar
+.gradletasknamecache
+.idea
+.kotlin/errors
+local/application-local.yml
 
-# production
-/build
+/**/node_modules
 
-# misc
 .DS_Store
 .env.local
 .env.development.local
@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Per-server deployment settings and, later, secrets.
+deployment/.env

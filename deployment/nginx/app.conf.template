@@ -1,0 +1,43 @@
+# Routing inside the app.
+#
+# The host's nginx is supposed to send the whole subtree here without stripping the prefix,
+# so these locations see the paths the browser asked for — and so does Next,
+# which is what its basePath expects.
+#
+# Keeping this hop means the host's config has exactly one rule for the whole
+# application: add a service here and nothing outside has to change.
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Nothing takes uploads yet. Keeps a stray large POST from filling a small
+    # disk before any application sees it.
+    client_max_body_size 2m;
+
+    # The backend, once it exists. Above the catch-all because the first
+    # matching regex wins.
+    # location ~ ^${BASE_PATH}/api($|/.*) {
+    #     proxy_pass         http://api:8080;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header   Host              $host;
+    #     proxy_set_header   X-Real-IP         $remote_addr;
+    #     proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+    #     proxy_set_header   X-Forwarded-Proto $scheme;
+    # }
+
+    # Everything else, including /_next/static — Next sets immutable caching on
+    # those itself, so adding it here would only duplicate the header.
+    #
+    # Buffering is left on, which is the default: the upstream is a single Node
+    # process, and buffering is what lets it finish a response and move on
+    # instead of being held open by a slow reader.
+    location ~ ^${BASE_PATH}($|/.*) {
+        proxy_pass         http://web:3000;
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+}

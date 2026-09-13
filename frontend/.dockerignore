@@ -1,0 +1,20 @@
+# Everything the image does not need, kept out of the build context so that
+# `COPY . .` stays small and a change to any of these does not bust the cache.
+node_modules
+.next
+build
+.gradle
+*.tsbuildinfo
+
+.git
+.idea
+.DS_Store
+
+# Local overrides. The committed `.env` holds only public defaults and is
+# meant to travel; anything ending in `.local` is personal.
+.env.*.local
+.env.local
+
+npm-debug.log*
+Dockerfile
+.dockerignore

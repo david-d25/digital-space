@@ -1,0 +1,290 @@
+.dialog {
+  --dialog-in: 260ms;
+  --dialog-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* A `<dialog>` arrives with a border, a background and its own centring. */
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+
+  width: min(780px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(660px, calc(100vh - 48px));
+  overflow: visible;
+
+  /*
+   * The card inside carries a `backdrop-filter`, and an ancestor below full
+   * opacity is a backdrop root — so for the length of this fade the glass has
+   * nothing to sample, and switches on at the final frame instead. Known, and
+   * deliberately left alone: both ways round cost more than the blemish.
+   * Moving the blur to the backdrop cures it but flattens the card and leaves
+   * the scrollbar gutter a black band; dropping the fade cures it but the
+   * entrance goes stiff.
+   */
+  scale: 0.98;
+  transition:
+    scale var(--dialog-in) var(--dialog-ease),
+    /* Discrete, so the element stays around long enough to animate out. */
+    display var(--dialog-in) allow-discrete,
+    overlay var(--dialog-in) allow-discrete;
+}
+
+.dialog[open] {
+  scale: 1;
+}
+
+@starting-style {
+  .dialog[open] {
+    scale: 0.98;
+  }
+}
+
+.dialog::backdrop {
+  background: oklch(21% 0.014 265 / 38%);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition:
+    opacity var(--dialog-in) var(--dialog-ease),
+    display var(--dialog-in) allow-discrete,
+    overlay var(--dialog-in) allow-discrete;
+}
+
+.dialog[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+.card {
+  opacity: 0;
+  transition: opacity var(--dialog-in) var(--dialog-ease);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(18px, 2vw, 26px);
+  align-content: start;
+
+  box-sizing: border-box;
+  max-height: inherit;
+  padding: clamp(24px, 2.6vw, 34px);
+
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-backdrop);
+  border: 1.5px solid var(--panel-edge);
+  border-radius: var(--panel-radius-large);
+  box-shadow: var(--panel-shadow);
+}
+
+.dialog[open] .card {
+  opacity: 1;
+}
+
+@starting-style {
+  .dialog[open] .card {
+    opacity: 0;
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .card {
+    background: var(--panel-bg-solid);
+  }
+}
+
+.cover {
+  position: relative;
+  grid-row: span 2;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  align-self: start;
+  overflow: hidden;
+  border-radius: clamp(10px, 1vw, 14px);
+  background: var(--tint);
+  box-shadow: 0 10px 26px oklch(21% 0.014 265 / 26%);
+}
+
+.coverImage {
+  object-fit: cover;
+}
+
+.heading {
+  /* Room for the close button, which floats over this corner. */
+  padding-right: 40px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.authors {
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 14px 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.status {
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: var(--tint-strong);
+  color: var(--ink);
+}
+
+.status[data-status='have read'] {
+  background: oklch(from var(--card-green) l c h / 18%);
+}
+
+.status[data-status='in queue'] {
+  background: oklch(from var(--card-orange) l c h / 18%);
+}
+
+/* The scrolling half: the note can be long and the card must not grow. */
+.body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.comment {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--tint);
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--ink-soft);
+  }
+}
+
+.isbn {
+  margin: 16px 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.close {
+  position: absolute;
+  top: clamp(16px, 1.6vw, 22px);
+  right: clamp(16px, 1.6vw, 22px);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 100px;
+  background: var(--tint);
+  color: var(--ink);
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: var(--tint-strong);
+  }
+}
+
+/*
+ * Narrow: a sheet along the bottom edge, which is where a thumb is. The cover
+ * shrinks into the heading row instead of holding a column of its own.
+ */
+@media (max-width: 640px) {
+  .dialog {
+    width: 100%;
+    max-height: 88vh;
+    margin: auto auto 0;
+    scale: 1;
+    translate: 0 100%;
+    transition:
+      translate var(--dialog-in) var(--dialog-ease),
+      display var(--dialog-in) allow-discrete,
+      overlay var(--dialog-in) allow-discrete;
+  }
+
+  .dialog[open] {
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .dialog[open] {
+      translate: 0 100%;
+    }
+  }
+
+  .card {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 16px;
+    max-height: 88vh;
+    padding: 20px;
+    border-radius: clamp(22px, 5vw, 28px) clamp(22px, 5vw, 28px) 0 0;
+  }
+
+  .cover {
+    grid-row: auto;
+  }
+
+  .body {
+    grid-column: span 2;
+  }
+
+  .title {
+    font-size: 21px;
+  }
+
+  .facts {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog,
+  .card,
+  .dialog::backdrop {
+    transition: none;
+  }
+}

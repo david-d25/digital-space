@@ -1,0 +1,193 @@
+.root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * One fixed box holding all of the scenery, so the whole picture is a single
+ * layer and a single `view-transition-name`.
+ *
+ * `contain: paint` clips it to the screen. The blob layer deliberately
+ * reaches past every edge so the wash never ends somewhere visible, and
+ * nothing out there is ever drawn - but it was being captured. Trimmed, the
+ * transition snapshot is exactly one viewport instead of 1.7 of them, and up
+ * to 2.9 on a very wide screen where the inset grows.
+ */
+.scenery {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  contain: paint;
+}
+
+/*
+ * The layers inside are `contain: strict` and never hit-tested, so scrolling
+ * the page doesn't make the browser re-check them against the rest of the
+ * document. Absolute rather than fixed: the wrapper is already the viewport,
+ * and three fixed layers are three candidates for a compositing layer where
+ * one will do.
+ */
+.blobs,
+.shapes,
+.dots {
+  position: absolute;
+  pointer-events: none;
+  contain: strict;
+}
+
+/*
+ * The layer is larger than the viewport, so the wash runs off every edge
+ * instead of ending somewhere visible. Growing the inset on a big screen is
+ * what scales the whole composition up, in one place.
+ */
+.blobs {
+  inset: -15%;
+  opacity: var(--blob-opacity);
+}
+
+@media (min-width: 1600px) {
+  .blobs {
+    inset: -25%;
+  }
+}
+
+@media (min-width: 2400px) {
+  .blobs {
+    inset: -35%;
+  }
+}
+
+/*
+ * The soft edge is a mask, not `filter: blur()`. A blur radius is a fixed
+ * number of pixels, so on a 4K screen the same 48px left a 2000px-wide blob
+ * looking like a barely feathered oval. A mask is sized by the element, so the
+ * falloff scales with the screen — and it drops the blur pass, which was the
+ * expensive part of painting this layer.
+ */
+.blob {
+  position: absolute;
+  --falloff: radial-gradient(
+    closest-side,
+    #000 0%,
+    rgb(0 0 0 / 80%) 30%,
+    rgb(0 0 0 / 38%) 62%,
+    transparent 100%
+  );
+  mask-image: var(--falloff);
+}
+
+.blobOne {
+  top: -50%;
+  bottom: 40%;
+  left: -50%;
+  right: 40%;
+  aspect-ratio: 1;
+  margin: auto;
+  background: var(--blob-1);
+}
+
+.blobTwo {
+  top: 40%;
+  bottom: -50%;
+  left: 40%;
+  right: -50%;
+  aspect-ratio: 1;
+  margin: auto;
+  background: var(--blob-2);
+}
+
+.shapes {
+  inset: 0;
+  overflow: hidden;
+  opacity: var(--shape-opacity);
+}
+
+/*
+ * A grid of dots across the whole viewport, fixed like the rest of the
+ * scenery, so it stays put while the page scrolls over it.
+ *
+ * One tiled gradient: the browser paints a single cell and repeats it, which
+ * is as cheap as this layer gets — no mask, no blur, nothing to composite per
+ * frame. The dot is drawn in `currentColor` rather than the token directly so
+ * that the theme swap below has something animatable to work with.
+ */
+.dots {
+  inset: 0;
+  --dot-gap: 22px;
+  --dot-radius: 0.5px;
+
+  color: var(--dot-color);
+  background-image: radial-gradient(
+    circle,
+    currentColor var(--dot-radius),
+    transparent calc(var(--dot-radius) + 0.5px)
+  );
+  background-size: var(--dot-gap) var(--dot-gap);
+}
+
+/* The only place an opacity fade is safe on a theme swap: no text to shimmer. */
+:global(.theme-transition) {
+  .blobs,
+  .shapes {
+    transition:
+      opacity 300ms ease-in-out,
+      background-color 300ms ease-in-out;
+  }
+
+  /* `background-image` cannot be transitioned, but the colour it is drawn
+   * from can: the dots repaint through the intermediate values. */
+  .dots {
+    transition: color 300ms ease-in-out;
+  }
+}
+
+/*
+ * The hard shapes are placed against the content column, not the viewport.
+ * Pinned to the screen edges they drifted away from the panels on a wide
+ * monitor and the frosted glass had nothing to blur; anchored here they tuck
+ * behind the panels at any window size. Percentages of this box match the
+ * original viewport units exactly at the 1280px the layout was drawn for.
+ */
+.shapesInner {
+  position: relative;
+  height: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.ring {
+  position: absolute;
+  left: -4%;
+  top: 10vh;
+  width: min(26%, 290px);
+  aspect-ratio: 1;
+  border: min(2vw, 20px) solid var(--brand-orange);
+  border-radius: 50%;
+}
+
+.teardrop {
+  position: absolute;
+  right: -3%;
+  top: 50vh;
+  width: min(20%, 230px);
+  aspect-ratio: 1;
+  background: var(--brand-blue);
+  border-radius: 50% 50% 50% 6px;
+}
+
+.pill {
+  position: absolute;
+  left: 26%;
+  bottom: -4vh;
+  width: min(36%, 420px);
+  height: min(9vw, 110px);
+  background: var(--brand-green);
+  border-radius: 200px;
+}

@@ -1,0 +1,74 @@
+@use '@/styles/tokens';
+
+:root {
+  scrollbar-gutter: stable;
+
+  --accent-blue: oklch(75% 0.18 230);
+
+  --outline-color: oklch(from var(--accent-blue) l c h / 50%);
+  --outline-width: 2px;
+
+  /* Aliases kept for the admin-flavoured components (Button, Modal, Toast). */
+  --text-primary: var(--ink);
+  --text-muted: var(--ink-soft);
+}
+
+* {
+  outline-color: var(--outline-color);
+  outline-width: var(--outline-width);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--page-bg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 18px;
+  scrollbar-color: var(--scrollbar-color) transparent;
+
+  /*
+   * A modal `<dialog>` takes the interaction but not the scroll, so the
+   * page still moves behind it under a wheel or a thumb.
+   */
+  &:has(.requires-no-scroll),
+  &:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+/* Links carry the colour of whatever surface they sit on. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*
+ * Held by `applyThemeAnimated` only while the palette is being swapped, so no
+ * hover or active state ever animates. `opacity` is deliberately absent: it
+ * promotes elements to their own layer for the duration of the fade, which
+ * flips text antialiasing and makes the labels shimmer. The two scenery
+ * layers, which carry no text, opt into it themselves.
+ */
+:root.theme-transition {
+  &,
+  & *,
+  & *::before,
+  & *::after {
+    transition:
+      background-color 300ms ease-in-out,
+      border-color 300ms ease-in-out,
+      color 300ms ease-in-out,
+      box-shadow 300ms ease-in-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-transition {
+    &,
+    & *,
+    & *::before,
+    & *::after {
+      transition: none;
+    }
+  }
+}

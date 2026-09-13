@@ -1,0 +1,214 @@
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(12px, 1.4vw, 18px);
+  box-sizing: border-box;
+  padding: clamp(14px, 2.2vw, 28px) clamp(14px, 2.2vw, 28px) clamp(28px, 6vw, 72px);
+}
+
+.stage {
+  flex: 1000 1 460px;
+  min-width: 0;
+}
+
+.work {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/*
+ * The overlay is absolutely positioned against this box.
+ *
+ * Deliberately not isolated: an isolation group would cut the frosted panel
+ * out of the backdrop, leaving the blend modes to composite against nothing
+ * but the cards' own translucency — which turns the additive modes into
+ * opaque black rectangles on a light background. The canvas writes zero alpha
+ * outside the cards, so letting it blend all the way down costs nothing.
+ */
+.cards {
+  position: relative;
+}
+
+.featured {
+  margin-top: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(10px, 1.2vw, 14px);
+  margin-top: clamp(10px, 1.2vw, 14px);
+}
+
+.controls {
+  flex: 1 1 280px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: clamp(14px, 2.2vw, 28px);
+  max-height: calc(100vh - 2 * clamp(14px, 2.2vw, 28px));
+  overflow-y: auto;
+}
+
+.controlsHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.controlsTitle {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.readout {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.controlHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.controlLabel {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.controlValue {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.hint {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.range {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--accent-blue);
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.segment {
+  flex: 1 1 auto;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 10px;
+  background: var(--tint);
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--tint-strong);
+  }
+
+  &[data-active='true'] {
+    background: var(--ink);
+    color: var(--ink-inverted);
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.button {
+  flex: 1 1 auto;
+  padding: 8px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--tint);
+  }
+}
+
+/* The settings, ready to be copied back into the defaults once they are good. */
+.dump {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--tint);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  color: var(--ink-soft);
+}
+
+/* Proof that the overlay is not card-specific: same effect, on a button. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.2vw, 14px);
+  margin-top: clamp(10px, 1.2vw, 14px);
+}
+
+.action {
+  padding: 14px 22px;
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  background: var(--tint);
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* The colour picker for the active theme. */
+.swatch {
+  width: 100%;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}

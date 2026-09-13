@@ -1,0 +1,44 @@
+# The site as it runs on the VDS.
+#
+# Nothing here should be reachable from the outside except through the host's shared nginx.
+
+name: digital-space
+
+x-logging: &logging
+  # Docker's default JSON driver grows without limit, and the droplet has 25 GB.
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  gateway:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    logging: *logging
+    ports:
+      - "127.0.0.1:${APP_PORT:-8081}:80"
+    environment:
+      # Must match the NEXT_PUBLIC_BASE_PATH the web image was built with.
+      # Empty for the root of a domain, "/digital-space" under a subdirectory.
+      BASE_PATH: "${BASE_PATH:-}"
+    volumes:
+      # nginx:alpine renders anything in this directory with envsubst at start,
+      # which is how BASE_PATH gets in without templating the file ourselves.
+      - ./nginx/app.conf.template:/etc/nginx/templates/default.conf.template:ro
+    depends_on:
+      - web
+
+  web:
+    image: ghcr.io/david-d25/digital-space/web:${TAG:-latest}
+    restart: unless-stopped
+    logging: *logging
+    environment:
+      NODE_ENV: production
+    volumes:
+      # Resized covers, which are expensive to produce on one shared vCPU.
+      # Without this they are thrown away on every deploy.
+      - image-cache:/app/.next/cache/images
+
+volumes:
+  image-cache:

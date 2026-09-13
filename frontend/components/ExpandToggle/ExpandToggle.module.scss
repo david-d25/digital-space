@@ -1,0 +1,76 @@
+.row {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(16px, 2vw, 24px);
+}
+
+/*
+ * The anchor is only a wrapper; the pill inside it is what is seen. They are
+ * the same size and the same shape, so the focus ring still traces the pill.
+ */
+.toggle {
+  display: inline-flex;
+  border-radius: 100px;
+  color: var(--ink);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 40px 10px 36px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.toggle:hover .button {
+  background: var(--tint-strong);
+  border-color: var(--tint-strong);
+}
+
+.icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.top,
+.bottom {
+  transition: transform 180ms ease;
+}
+
+/* The chevrons part to open and close up to collapse, which is the same
+ * thing the panel underneath is about to do. */
+.toggle:hover [data-expand-toggle='expand'] .top {
+  transform: translateY(-1.2px);
+}
+
+.toggle:hover [data-expand-toggle='expand'] .bottom {
+  transform: translateY(1.2px);
+}
+
+.toggle:hover [data-expand-toggle='collapse'] .top {
+  transform: translateY(1.2px);
+}
+
+.toggle:hover [data-expand-toggle='collapse'] .bottom {
+  transform: translateY(-1.2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .top,
+  .bottom {
+    transition: none;
+  }
+}

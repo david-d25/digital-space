@@ -1,0 +1,110 @@
+# Build once, deploy that exact build.
+#
+# The image is the artifact: it is built here, tagged with the commit it came
+# from, pushed to GHCR, and the server only pulls it.
+#
+# Rolling back is setting TAG to an older commit and running `up -d`.
+
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/web
+
+jobs:
+  web:
+    name: Build and publish web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Type check
+        working-directory: frontend
+        run: npm ci && npx tsc --noEmit
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
+          build-args: |
+            NEXT_PUBLIC_BASE_PATH=${{ vars.BASE_PATH }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy
+    needs: web
+    runs-on: ubuntu-latest
+    # Don't build if deploy host not specified
+    if: ${{ vars.DEPLOY_HOST != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authorise
+        env:
+          KEY: ${{ secrets.DEPLOY_KEY }}
+          HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+
+      # The compose file and the nginx template are versioned with the code,
+      # so they travel with every deploy. `.env` lives only on the server and
+      # is never touched here.
+      - name: Copy deployment files
+        env:
+          TARGET: ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}
+          DIR: ${{ vars.DEPLOY_PATH }}
+        run: |
+          ssh "$TARGET" "mkdir -p '$DIR/nginx'"
+          scp deployment/compose.yaml "$TARGET:$DIR/"
+          scp deployment/nginx/app.conf.template "$TARGET:$DIR/nginx/"
+
+      - name: Pull and restart
+        env:
+          TARGET: ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}
+          DIR: ${{ vars.DEPLOY_PATH }}
+          TAG: ${{ github.sha }}
+        run: |
+          ssh "$TARGET" "
+            set -eu
+            cd '$DIR'
+            touch .env
+            sed -i '/^TAG=/d' .env
+            echo 'TAG=$TAG' >> .env
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
+          "

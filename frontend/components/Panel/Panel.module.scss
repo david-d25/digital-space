@@ -1,0 +1,63 @@
+.surface {
+  box-sizing: border-box;
+}
+
+/* Frosted glass: about a quarter of the background stays visible through it. */
+.panel {
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-backdrop);
+  border: 1.5px solid var(--panel-edge);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  scroll-margin-top: 24px;
+
+  &:not(.noPadding) {
+    padding: var(--panel-padding);
+  }
+
+  &.large {
+    border-radius: var(--panel-radius-large);
+
+    &:not(.noPadding) {
+      padding: var(--panel-padding-large);
+    }
+  }
+}
+
+/* Flat tinted block, meant to sit inside a panel. */
+.card {
+  border-radius: clamp(20px, 2vw, 28px);
+  background: var(--tint);
+
+  &:not(.noPadding) {
+    padding: clamp(18px, 2vw, 24px);
+  }
+
+  &.large:not(.noPadding) {
+    padding: clamp(20px, 2.4vw, 32px);
+  }
+
+  &:hover,
+  &:has(a:hover) {
+    background: var(--tint-strong);
+  }
+
+  /* Quoted, or Sass reads the keys as colour values and warns that
+   * interpolating one is unlikely to produce the CSS meant. */
+  @each $accent, $idle, $hover in ('blue', 10%, 16%), ('green', 14%, 20%), ('orange', 13%, 19%) {
+    &[data-accent='#{$accent}'] {
+      background: oklch(from var(--card-#{$accent}) l c h / #{$idle});
+
+      &:hover,
+      &:has(a:hover) {
+        background: oklch(from var(--card-#{$accent}) l c h / #{$hover});
+      }
+    }
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .panel {
+    background: var(--panel-bg-solid);
+  }
+}

@@ -1,0 +1,41 @@
+.button:not(.noStyle) {
+  --bg: oklch(30% 0 0);
+
+  &[data-color-accent='primary'] {
+    --bg: oklch(from var(--accent-blue) calc(l * 0.5) .1 h);
+  }
+
+  --border-color: oklch(from var(--bg) calc(l + 0.1) c h);
+
+  font-size: 18px;
+  border: 1px solid var(--border-color);
+  background: var(--bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 5px;
+
+  // To allow to edit outside of the button
+  &:not(.noPadding) {
+    padding: 5px 15px;
+  }
+
+  &:hover {
+    background: oklch(from var(--bg) .35 c h);
+  }
+
+  &:active {
+    background: oklch(from var(--bg) .4 c h);
+  }
+
+  &:focus {
+    outline-style: solid;
+    outline-offset: 1px;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border-color: transparent;
+    color: var(--text-muted);
+    background: oklch(30% 0 0);
+  }
+}

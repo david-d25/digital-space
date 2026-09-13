@@ -1,0 +1,25 @@
+.work {
+}
+
+.metaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metaIcon {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+.featured {
+  margin-top: 16px;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(10px, 1.2vw, 14px);
+  margin-top: clamp(10px, 1.2vw, 14px);
+}
