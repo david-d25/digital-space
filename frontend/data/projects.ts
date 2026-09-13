@@ -17,13 +17,13 @@ export const projects: Project[] = [
     {
         href: 'https://github.com/david-d25/digital-space',
         title: 'digital-space',
-        description: 'This site. A place for projects, notes and a shelf of books.',
+        description: 'This site. A place with my projects, books, etc.',
         accent: 'blue',
     },
     {
         href: 'https://github.com/david-d25/jutsu-extension',
         title: 'jutsu-extension',
-        description: 'A browser extension that makes a streaming site bearable.',
+        description: 'Extension for jut.su that allows to set playback speed, autoskip intro, and autoplay next episode.',
         accent: 'orange',
     },
 ];
