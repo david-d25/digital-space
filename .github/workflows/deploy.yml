@@ -74,32 +74,51 @@ jobs:
         env:
           KEY: ${{ secrets.DEPLOY_KEY }}
           HOST: ${{ vars.DEPLOY_HOST }}
+          HOST_KEY: ${{ vars.DEPLOY_HOST_KEY }}
+          SSH_USER: ${{ vars.DEPLOY_USER }}
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
 
-      # The compose file and the nginx template are versioned with the code,
-      # so they travel with every deploy. `.env` lives only on the server and
-      # is never touched here.
-      - name: Copy deployment files
-        env:
-          TARGET: ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}
-          DIR: ${{ vars.DEPLOY_PATH }}
-        run: |
-          ssh "$TARGET" "mkdir -p '$DIR/nginx'"
-          scp deployment/compose.yaml "$TARGET:$DIR/"
-          scp deployment/nginx/app.conf.template "$TARGET:$DIR/nginx/"
+          # Pinned when we are given one. Scanning on every run costs three
+          # more connections to a port that is under constant brute-force
+          # pressure, and it trusts whichever host happens to answer.
+          if [ -n "$HOST_KEY" ]; then
+            printf '%s\n' "$HOST_KEY" > ~/.ssh/known_hosts
+          else
+            echo "::warning::DEPLOY_HOST_KEY is not set; scanning the host key instead"
+            ssh-keyscan -t ed25519 "$HOST" >> ~/.ssh/known_hosts
+          fi
 
-      - name: Pull and restart
+          # Retries are here because sshd drops connections at random once its
+          # pre-auth queue is full, which on a public IP it regularly is.
+          cat >> ~/.ssh/config <<CONF
+          Host deploy-target
+            HostName $HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/id_ed25519
+            IdentitiesOnly yes
+            ConnectTimeout 20
+            ConnectionAttempts 5
+            ServerAliveInterval 30
+          CONF
+
+      # One connection for the whole deploy. It used to take four — a mkdir,
+      # two copies and the restart — and each was another chance to be turned
+      # away. The files travel through the same pipe as a tar stream.
+      #
+      # `.env` is not in the archive (it is not in git), so the server's own
+      # copy survives; only its TAG line is rewritten.
+      - name: Ship and restart
         env:
-          TARGET: ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}
           DIR: ${{ vars.DEPLOY_PATH }}
           TAG: ${{ github.sha }}
         run: |
-          ssh "$TARGET" "
+          tar -C deployment -czf - . | ssh deploy-target "
             set -eu
+            mkdir -p '$DIR'
+            tar -C '$DIR' -xzf -
             cd '$DIR'
             touch .env
             sed -i '/^TAG=/d' .env
